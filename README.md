@@ -1,1 +1,1 @@
-# The-Recipe-Club-Frontend
+# Recipe Club (Admin)
