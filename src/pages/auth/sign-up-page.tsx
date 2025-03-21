@@ -40,8 +40,10 @@ const signUpPage = () => {
           gap: 2,
           position: "relative",
           zIndex: 2,
-          margin: "30px",
-          marginLeft: "80px",
+         marginRight: "60px",
+         marginTop: "5px",
+         
+         
         }}
       >
         <Box

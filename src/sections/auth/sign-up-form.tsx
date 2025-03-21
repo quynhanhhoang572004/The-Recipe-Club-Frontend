@@ -77,10 +77,58 @@ const SignUpForm = () => {
   return (
     <div ref={formRef}>
       <form onSubmit={handleSubmit(onSubmit)}>
+         <Stack
+                  sx={{
+                    marginBottom: 3,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontStyle: "normal",
+                        fontWeight: 400,
+                        fontSize: "15px",
+                        lineHeight: "24px",
+                        color: "#000000",
+                      }}
+                    >
+                      Welcome to Recipe Club
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "14px",
+                        display: "flex",
+                        gap: 0.5,
+                      }}
+                    >
+                      Have an Account ?{" "}
+                      <a
+                        href="/sign-up"
+                        style={{
+                          color: "#FF885B",
+                          textDecoration: "underline",
+                          textDecorationThickness: "1px",
+                          fontWeight: 600,
+                          textUnderlineOffset: "2px",
+                        }}
+                      >
+                        Sign in
+                      </a>
+                    </Typography>
+                  </Box>
+                  <Typography fontSize={30} fontWeight={600}>
+                    Sign Up
+                  </Typography>
+                 
+                </Stack>
         <Stack gap={1}>
-      <Typography fontSize={30} fontWeight={600}>
-            Sign in
-          </Typography>
+   
       
         <Box display="flex" gap={2} sx={{ mb: 2 }}>
 
@@ -456,7 +504,7 @@ const SignUpForm = () => {
           </Box>
         </Box>
 
-        <Stack gap={2}>
+        <Stack gap={1}>
           <Button
             type="submit"
             variant="contained"
@@ -500,30 +548,6 @@ const SignUpForm = () => {
               <img src={GoogleLogo} width={24} height={24} alt="google-logo" />
               <Typography sx={{ fontWeight: 600 }}>
                 Sign up with Google
-              </Typography>
-            </Box>
-          </Button>
-
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{
-              backgroundColor: "#FF885B",
-              "&:hover": {
-                backgroundColor: "#ff7a47",
-              },
-            }}
-            onClick={() => console.log("Facebook signup")}
-          >
-            <Box display="flex" alignItems="center" gap={2}>
-              <img
-                src={FacebookLogo}
-                width={24}
-                height={24}
-                alt="facebook-logo"
-              />
-              <Typography sx={{ fontWeight: 600 }}>
-                Sign up with Facebook
               </Typography>
             </Box>
           </Button>
