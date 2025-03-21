@@ -16,7 +16,7 @@ import {
   initialSignInForm,
   SignInFormProps,
   signInSchema,
-} from "@/types/signin";
+} from "@/types/auth/signin";
 import toast from "react-hot-toast";
 import FacebookLogo from "@/assets/icons/facebook-logo.svg";
 import GoogleLogo from "@/assets/icons/google-logo.svg";
