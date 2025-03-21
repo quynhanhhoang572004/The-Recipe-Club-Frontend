@@ -1,13 +1,16 @@
 import SeoMetaTags from "@/components/seo-meta-tags";
 import { ChildrenNodeProps } from "@/types/children";
+import {Outlet} from "react-router-dom";
 
-type HomeLayoutProps = ChildrenNodeProps;
+// type HomeLayoutProps = ChildrenNodeProps;
+// { children }: HomeLayoutProps
 
-const HomeLayout = ({ children }: HomeLayoutProps) => {
+const HomeLayout = () => {
   return (
     <>
       <SeoMetaTags title="Home" />
-      {children}
+      {/* {children} */}
+      <Outlet />
     </>
   );
 };
