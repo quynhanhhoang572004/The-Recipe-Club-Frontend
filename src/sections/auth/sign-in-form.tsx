@@ -320,24 +320,7 @@ const SignInForm = () => {
               </Typography>
             </Box>
           </Button>
-          <Button
-            type="submit"
-            variant="contained"
-            style={{ background: "#FF885B", marginTop: "-8px" }}
-            loading={loading}
-          >
-            <Box display="flex" alignItems="center" gap={2}>
-              <img
-                src={FacebookLogo}
-                width={24}
-                height={24}
-                alt="facebook-logo"
-              />
-              <Typography sx={{ fontWeight: 600 }}>
-                Sign in with Facebook
-              </Typography>
-            </Box>
-          </Button>
+          
         </Stack>
       </form>
     </div>
