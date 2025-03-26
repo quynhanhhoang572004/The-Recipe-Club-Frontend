@@ -1,6 +1,6 @@
 import SignUpForm from "@/sections/auth/sign-up-form";
-import { Box, Card, Stack, Typography } from "@mui/material";
-import backgroundImage from "../../assets/images/sign-up-background.png";
+import { Box, Card } from "@mui/material";
+
 
 const signUpPage = () => {
   return (
@@ -10,12 +10,12 @@ const signUpPage = () => {
         display: "flex",
         justifyContent: "end",
         alignItems: "center",
-        backgroundImage: `url(${backgroundImage})`,
+        backgroundImage: `url(images/sign-up-background.png)`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "70%",
         backgroundPosition: "left center",
         position: "relative",
-        padding: "80px",
+        padding: "5rem",
         margin: 0,
 
         "&::before": {
@@ -33,17 +33,15 @@ const signUpPage = () => {
       <Card
         elevation={12}
         sx={{
-          padding: "24px",
+          padding: "1.5rem",
           width: "30rem",
           display: "flex",
           flexDirection: "column",
           gap: 2,
           position: "relative",
           zIndex: 2,
-         marginRight: "60px",
-         marginTop: "5px",
-         
-         
+          marginRight: "3.75rem",
+          marginTop: "0.3125rem",
         }}
       >
         <Box

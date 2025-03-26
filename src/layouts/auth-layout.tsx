@@ -4,14 +4,14 @@ import {Outlet} from "react-router-dom";
 // type HomeLayoutProps = ChildrenNodeProps;
 // { children }: HomeLayoutProps
 
-const HomeLayout = () => {
+const AuthLayout = () => {
   return (
     <>
-      <SeoMetaTags title="Home" />
+      <SeoMetaTags title="Auth" />
       {/* {children} */}
       <Outlet />
     </>
   );
 };
 
-export default HomeLayout;
+export default AuthLayout;

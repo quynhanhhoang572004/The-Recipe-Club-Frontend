@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -8,7 +9,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { ChevronRight, Eye, EyeOff, Lock, User } from "lucide-react";
+import { Eye, EyeOff, Lock, User } from "lucide-react";
 import { useState, useRef, useLayoutEffect, useCallback } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,8 +19,7 @@ import {
   signInSchema,
 } from "@/types/auth/signin";
 import toast from "react-hot-toast";
-import FacebookLogo from "@/assets/icons/facebook-logo.svg";
-import GoogleLogo from "@/assets/icons/google-logo.svg";
+import GoogleLogo from "@/public/icons/google-logo.svg";
 
 const SignInForm = () => {
   const [focusInput, setFocusInput] = useState<keyof SignInFormProps | null>(
@@ -80,7 +80,7 @@ const SignInForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack
           sx={{
-            marginBottom: 3,
+            marginBottom: "1.875rem",
           }}
         >
           <Box
@@ -94,8 +94,8 @@ const SignInForm = () => {
               sx={{
                 fontStyle: "normal",
                 fontWeight: 400,
-                fontSize: "15px",
-                lineHeight: "24px",
+                fontSize: "0.9375rem",
+                lineHeight: "1.5rem",
                 color: "#000000",
               }}
             >
@@ -103,27 +103,27 @@ const SignInForm = () => {
             </Typography>
             <Typography
               sx={{
-                fontSize: "14px",
+                fontSize: "0.875rem",
                 display: "flex",
-                gap: 0.5,
+                gap: "0.3125rem",
               }}
             >
               No Account?{" "}
-              <a
-                href="/sign-up"
+              <Link
+                 to="/signup"
                 style={{
                   color: "#FF885B",
                   textDecoration: "underline",
-                  textDecorationThickness: "1px",
+                  textDecorationThickness: "0.0625rem",
                   fontWeight: 600,
-                  textUnderlineOffset: "2px",
+                  textUnderlineOffset: "0.125rem",
                 }}
               >
                 Sign up
-              </a>
+              </Link>
             </Typography>
           </Box>
-          <Typography fontSize={30} fontWeight={600}>
+          <Typography fontSize="1.875rem" fontWeight={600}>
             Sign in
           </Typography>
           <Typography
@@ -134,7 +134,7 @@ const SignInForm = () => {
             Please enter your credentials to sign in
           </Typography>
         </Stack>
-        <Stack gap={2}>
+        <Stack gap="1rem">
           <TextField
             {...register("account")}
             error={!!errors.account}
@@ -162,7 +162,7 @@ const SignInForm = () => {
                 startAdornment: (
                   <InputAdornment position="start">
                     <User
-                      size={20}
+                      size="1.25rem"
                       strokeWidth={1.5}
                       color={
                         errors.account
@@ -187,7 +187,7 @@ const SignInForm = () => {
                   {
                     name: "offset",
                     options: {
-                      offset: [0, -16],
+                      offset: [0, -1],
                     },
                   },
                 ],
@@ -227,7 +227,7 @@ const SignInForm = () => {
                   startAdornment: (
                     <InputAdornment position="start">
                       <Lock
-                        size={20}
+                        size="1.25rem"
                         strokeWidth={1.5}
                         color={
                           errors.password
@@ -252,9 +252,9 @@ const SignInForm = () => {
                         onClick={() => setShowPassword(!showPassword)}
                       >
                         {showPassword ? (
-                          <Eye size={20} strokeWidth={1.5} />
+                          <Eye size="1.25rem" strokeWidth={1.5} />
                         ) : (
-                          <EyeOff size={20} strokeWidth={1.5} />
+                          <EyeOff size="1.25rem" strokeWidth={1.5} />
                         )}
                       </IconButton>
                     </InputAdornment>
@@ -266,11 +266,11 @@ const SignInForm = () => {
           <Typography
             sx={{
               color: "#FF885B",
-              fontSize: "14px",
+              fontSize: "0.875rem",
               display: "flex",
               justifyContent: "end",
               alignItems: "center",
-              gap: 0.5,
+              gap: "0.3125rem",
               cursor: "pointer",
             }}
           >
@@ -279,10 +279,10 @@ const SignInForm = () => {
           <Button
             type="submit"
             variant="contained"
-            style={{ background: "#FF885B", marginBottom: "-10px" }}
+            style={{ background: "#FF885B", marginBottom: "-0.625rem" }}
             loading={loading}
           >
-            <Box display="flex" alignItems="center" gap={0.5}>
+            <Box display="flex" alignItems="center" gap="0.3125rem">
               <Typography
                 sx={{
                   fontWeight: 600,
@@ -290,19 +290,18 @@ const SignInForm = () => {
               >
                 Sign in
               </Typography>
-              {/* <ChevronRight size={20} strokeWidth={1.5} /> */}
             </Box>
           </Button>
           <Typography
             sx={{
               color: "#ABABAB",
               alignItems: "center",
-              fontSize: "14px",
+              fontSize: "0.875rem",
               display: "flex",
               justifyContent: "center",
               width: "100%",
               textAlign: "center",
-              margin: "4px 0",
+              margin: "0.25rem 0",
             }}
           >
             OR
@@ -310,17 +309,16 @@ const SignInForm = () => {
           <Button
             type="submit"
             variant="contained"
-            style={{ background: "#FF885B", marginTop: "-10px" }}
+            style={{ background: "#FF885B", marginTop: "-0.625rem" }}
             loading={loading}
           >
-            <Box display="flex" alignItems="center" gap={2}>
-              <img src={GoogleLogo} width={24} height={24} alt="google-logo" />
+            <Box display="flex" alignItems="center" gap = {2}>
+              <img src="/icons/google-logo.svg" width={24} height={24} alt="google-logo" />
               <Typography sx={{ fontWeight: 600 }}>
                 Sign in with Google
               </Typography>
             </Box>
           </Button>
-          
         </Stack>
       </form>
     </div>

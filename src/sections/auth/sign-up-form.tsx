@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -18,8 +19,7 @@ import {
   SignUpProps,
 } from "@/types/auth/signup";
 import toast from "react-hot-toast";
-import FacebookLogo from "@/assets/icons/facebook-logo.svg";
-import GoogleLogo from "@/assets/icons/google-logo.svg";
+
 
 const SignUpForm = () => {
   const [focusInput, setFocusInput] = useState<string | null>("firstName");
@@ -93,8 +93,8 @@ const SignUpForm = () => {
                       sx={{
                         fontStyle: "normal",
                         fontWeight: 400,
-                        fontSize: "15px",
-                        lineHeight: "24px",
+                        fontSize: "0.9375rem",
+                        lineHeight: "1.5rem",
                         color: "#000000",
                       }}
                     >
@@ -102,24 +102,24 @@ const SignUpForm = () => {
                     </Typography>
                     <Typography
                       sx={{
-                        fontSize: "14px",
+                        fontSize: "0.875rem",
                         display: "flex",
                         gap: 0.5,
                       }}
                     >
                       Have an Account ?{" "}
-                      <a
-                        href="/sign-up"
+                      <Link
+                        to="/signin"
                         style={{
                           color: "#FF885B",
                           textDecoration: "underline",
-                          textDecorationThickness: "1px",
+                          textDecorationThickness: "0.0625rem",
                           fontWeight: 600,
-                          textUnderlineOffset: "2px",
+                          textUnderlineOffset: "0.125rem",
                         }}
                       >
                         Sign in
-                      </a>
+                      </Link>
                     </Typography>
                   </Box>
                   <Typography fontSize={30} fontWeight={600}>
@@ -526,8 +526,8 @@ const SignUpForm = () => {
             sx={{
               color: "#ABABAB",
               textAlign: "center",
-              fontSize: "14px",
-              margin: "4px 0",
+              fontSize: "0.875rem",
+              margin: "0.25rem 0",
             }}
           >
             OR
@@ -545,7 +545,7 @@ const SignUpForm = () => {
             onClick={() => console.log("Google signup")}
           >
             <Box display="flex" alignItems="center" gap={2}>
-              <img src={GoogleLogo} width={24} height={24} alt="google-logo" />
+              <img src= "/icons/google-logo.svg" width={24} height={24} alt="google-logo" />
               <Typography sx={{ fontWeight: 600 }}>
                 Sign up with Google
               </Typography>

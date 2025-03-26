@@ -1,6 +1,6 @@
 import SignInForm from "@/sections/auth/sign-in-form";
-import { Box, Card, Stack, Typography } from "@mui/material";
-import backgroundImage from "../../assets/images/sign-in-background.png";
+import { Box, Card} from "@mui/material";
+
 
 
 const signInPage = () => {
@@ -11,12 +11,12 @@ const signInPage = () => {
         display: "flex",
         justifyContent: "end",
         alignItems: "center",
-        backgroundImage: `url(${backgroundImage})`,
+        backgroundImage: `url(images/sign-in-background.png)`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "70%",
         backgroundPosition: " left center",
         position: "relative",
-        padding: "80px",
+        padding: "5rem",
         margin: 0,
 
         "&::before": {
@@ -34,16 +34,16 @@ const signInPage = () => {
       <Card
         elevation={12}
         sx={{
-          padding: "24px",
+          padding: "1.5rem",
           width: "30rem",
           display: "flex",
           flexDirection: "column",
           gap: 2,
           position: "relative",
           zIndex: 2,
-          margin: "30px",
-          marginRight: "60px",
-          marginTop: "5px",
+          margin: "1.875rem",
+          marginRight: "3.75rem",
+          marginTop: "0.3125rem",
         }}
       >
         <Box
