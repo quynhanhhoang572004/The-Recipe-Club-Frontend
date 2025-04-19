@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import {
   Box,
   Button,
@@ -19,7 +19,6 @@ import {
   signInSchema,
 } from "@/types/auth/signin";
 import toast from "react-hot-toast";
-import GoogleLogo from "@/public/icons/google-logo.svg";
 
 const SignInForm = () => {
   const [focusInput, setFocusInput] = useState<keyof SignInFormProps | null>(
@@ -110,7 +109,7 @@ const SignInForm = () => {
             >
               No Account?{" "}
               <Link
-                 to="/signup"
+                to="/signup"
                 style={{
                   color: "#FF885B",
                   textDecoration: "underline",
@@ -312,8 +311,13 @@ const SignInForm = () => {
             style={{ background: "#FF885B", marginTop: "-0.625rem" }}
             loading={loading}
           >
-            <Box display="flex" alignItems="center" gap = {2}>
-              <img src="/icons/google-logo.svg" width={24} height={24} alt="google-logo" />
+            <Box display="flex" alignItems="center" gap={2}>
+              <img
+                src="/icons/google-logo.svg"
+                width={24}
+                height={24}
+                alt="google-logo"
+              />
               <Typography sx={{ fontWeight: 600 }}>
                 Sign in with Google
               </Typography>
