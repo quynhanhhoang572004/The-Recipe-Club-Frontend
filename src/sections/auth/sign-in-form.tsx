@@ -19,8 +19,13 @@ import {
   signInSchema,
 } from "@/types/auth/signin";
 import toast from "react-hot-toast";
+import { loginApi } from "@/api/auth.service";
+import { useAuth } from "@/components/hooks/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const SignInForm = () => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
   const [focusInput, setFocusInput] = useState<keyof SignInFormProps | null>(
     "account",
   );
@@ -43,29 +48,33 @@ const SignInForm = () => {
     }
   };
 
-  const onSubmit: SubmitHandler<SignInFormProps> = useCallback(async (data) => {
-    try {
-      setLoading(true);
-      toast.promise(
-        new Promise((resolve) => setTimeout(resolve, 3000)).then(() => {
-          console.log(data);
-          return true;
-        }),
-        {
+  const onSubmit: SubmitHandler<SignInFormProps> = useCallback(
+    async (data) => {
+      try {
+        setLoading(true);
+  
+        const promise = loginApi({
+          account: data.account,
+          password: data.password,
+        });
+  
+        const token = await toast.promise(promise, {
           loading: "Signing in...",
           success: "Signed in successfully",
-          error: "Failed to sign in",
-        },
-      );
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
+          error: "Invalid account or password",
+        });
+  
+        login(token);       
+        navigate("/testPage");       
+      } catch (error) {
+        toast.error("Login failed");
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    },
+    [login, navigate]
+  );
 
   useLayoutEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);

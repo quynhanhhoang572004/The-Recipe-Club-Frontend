@@ -19,7 +19,7 @@ const signUpPage = () => {
         margin: 0,
 
         "&::before": {
-          content: '""', // Required for pseudo-elements
+          content: '""', 
           position: "absolute",
           top: 0,
           left: 0,
