@@ -54,17 +54,6 @@ const signInPage = () => {
             gap: 2,
           }}
         >
-          {/* <img src="/vite.svg" />
-          <Stack>
-            <Typography fontWeight={800}>Recipe Club - Admin</Typography>
-            <Typography
-              sx={{
-                color: "#737373",
-              }}
-            >
-              Welcome to The Recipe Club
-            </Typography>
-          </Stack> */}
         
         </Box>
         <SignInForm />

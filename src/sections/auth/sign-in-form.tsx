@@ -19,7 +19,6 @@ import {
   signInSchema,
 } from "@/types/auth/signin";
 import toast from "react-hot-toast";
-import GoogleLogo from "@/public/icons/google-logo.svg";
 
 const SignInForm = () => {
   const [focusInput, setFocusInput] = useState<keyof SignInFormProps | null>(

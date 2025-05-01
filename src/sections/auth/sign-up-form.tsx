@@ -30,8 +30,7 @@ const SignUpForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
-    clearErrors,
+
   } = useForm<SignUpProps>({
     resolver: zodResolver(signUpSchema),
     defaultValues: initialSignUpValues,
