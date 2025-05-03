@@ -14,21 +14,6 @@ const signInPage = () => {
         backgroundSize: "contain",
         position: "relative",
         padding: "5rem",
-<<<<<<< HEAD
-=======
-        margin: 0,
-
-        "&::before": {
-          content: '""', 
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-
-          zIndex: 1,
-        },
->>>>>>> e5622397e9aaf77b8cff78132deb3f1ebe71d8c9
       }}
     >
       <Card
@@ -54,21 +39,8 @@ const signInPage = () => {
             gap: 2,
           }}
         >
-<<<<<<< HEAD
-          {/* <img src="/vite.svg" />
-          <Stack>
-            <Typography fontWeight={800}>Recipe Club - Admin</Typography>
-            <Typography
-              sx={{
-                color: "#737373",
-              }}
-            >
-              Welcome to The Recipe Club
-            </Typography>
-          </Stack> */}
-=======
+       
         
->>>>>>> e5622397e9aaf77b8cff78132deb3f1ebe71d8c9
         </Box>
         <SignInForm />
       </Card>

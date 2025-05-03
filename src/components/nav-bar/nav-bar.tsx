@@ -52,7 +52,7 @@ const AuthButton = styled(Button)<{
   },
   "&:hover": {
     backgroundColor:
-      backgroundColor === "white" ? "#FFF0E6" : "#e26b3f", // adjust hover based on type
+      backgroundColor === "white" ? "#FFF0E6" : "#e26b3f", 
     borderColor: "#FF885B",
   },
 }));
