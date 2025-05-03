@@ -65,7 +65,7 @@ const SignInForm = () => {
         });
   
         login(token);       
-        navigate("/testPage");       
+        navigate("/test");       
       } catch (error) {
         toast.error("Login failed");
         console.error(error);
