@@ -1,9 +1,10 @@
 import AuthLayout from "./layouts/auth-layout";
-import SignInpage from "@/pages/auth/sign-in-page"
+import SignInpage from "@/pages/auth/sign-in-page";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignUpPage from "./pages/auth/sign-up-page";
 import { AuthProvider } from "@/components/hooks/contexts/AuthContext"; 
-import Test from "./pages/test"
+import MyPantryPage from "./pages/my-pantry/my-pantry-page";
+
 const App = () => {
     return ( 
       <AuthProvider>
@@ -12,7 +13,8 @@ const App = () => {
           <Route element={<AuthLayout />}>
             <Route path="/signin" element={<SignInpage />} />
             <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/test" element={<Test />} />
+            <Route path="/mypantry" element ={<MyPantryPage/>}/>
+           
           </Route>
         </Routes>
       </BrowserRouter>

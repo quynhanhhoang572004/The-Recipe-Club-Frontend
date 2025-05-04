@@ -12,8 +12,8 @@ const IngredientGroup: React.FC = () => {
     const fetchPantry = async () => {
       try {
         const [catRes, ingRes] = await Promise.all([
-          fetch('http://localhost:8000/api/v1/ingredients/categories'),
-          fetch('http://localhost:8000/api/v1/ingredients'),
+          fetch(`${import.meta.env.VITE_API_URL}/ingredients/categories`),
+          fetch(`${import.meta.env.VITE_API_URL}/ingredients`),
         ]);
 
         const categoriesJson = await catRes.json();
@@ -30,7 +30,7 @@ const IngredientGroup: React.FC = () => {
 
         if (accessToken) {
           try {
-            const pantryRes = await fetch('http://localhost:8000/api/v1/users/pantries', {
+            const pantryRes = await fetch(`${process.env.VITE_API_URL}/users/pantries`, {
               headers: {
                 Authorization: `Bearer ${accessToken}`,
               },

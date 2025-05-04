@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Typography, Box } from "@mui/material";
+import {Typography, Box, Divider } from "@mui/material";
 import PantryTag from "@/components/pantry-tag/pantry-tag";
 import { Ingredient } from "@/types/pantry/ingredient";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -39,7 +39,7 @@ const PantryCategoryBlock: React.FC<Props> = ({
         p: 2,
         mb: 3,
         boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
-        backgroundColor: "#f9f9f9",
+        backgroundColor: "#F2F2F2",
       }}
     >
      
@@ -55,7 +55,7 @@ const PantryCategoryBlock: React.FC<Props> = ({
         <Typography
           variant="h6"
           fontWeight="bold"
-          color="#e88a54"
+          color="#FF885B"
           sx={{ display: "flex", alignItems: "center", gap: 1 }}
         >
           {category}
@@ -64,7 +64,18 @@ const PantryCategoryBlock: React.FC<Props> = ({
         <Typography variant="subtitle1" fontWeight={600}>
           {selectedCount}/{localItems.length}
         </Typography>
+      
       </Box>
+      <Divider 
+        sx={{ 
+          mt: 1, 
+          mb: 2, 
+          borderColor: '#FF885B', 
+          opacity: 0.6,  
+          height: '2px', 
+        }} 
+      />
+
 
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 2 }}>
         {displayedItems.map((item) => (

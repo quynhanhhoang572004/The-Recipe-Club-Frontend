@@ -4,7 +4,12 @@ import { SearchIcon } from "lucide-react";
 import { useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-const SearchBar = () => {
+interface SearchBarProps{
+  PlaceHolder: string,
+}
+
+
+const SearchBar = ({PlaceHolder}: SearchBarProps) => {
   const searchRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const onHandleKey = useCallback(
@@ -23,7 +28,7 @@ const SearchBar = () => {
       inputRef={searchRef}
       onKeyDown={onHandleKey}
       variant="outlined"
-      placeholder="What’s in your fridge? Start typing..."
+      placeholder={PlaceHolder}
       sx={{
         width: "24rem",
       

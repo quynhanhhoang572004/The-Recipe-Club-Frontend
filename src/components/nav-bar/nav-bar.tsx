@@ -52,7 +52,7 @@ const AuthButton = styled(Button)<{
   },
   "&:hover": {
     backgroundColor:
-      backgroundColor === "white" ? "#FFF0E6" : "#e26b3f", // adjust hover based on type
+      backgroundColor === "white" ? "#FFF0E6" : "#e26b3f", 
     borderColor: "#FF885B",
   },
 }));
@@ -64,13 +64,18 @@ const NavBar = () => {
 
   return (
     <AppBar
+      elevation={0}
       sx={{
         position: "fixed",
         backgroundColor: "#FFFFF6",
         justifyContent: "center",
         height: "4.5rem",
         border: "none",
-        boxShadow: "none",
+        borderWidth: "0px",
+        borderStyle: "none",
+        outline: "none",
+        boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.08)",
+        zIndex: (theme) => theme.zIndex.drawer + 1,
       }}
     >
       <Toolbar
@@ -139,7 +144,7 @@ const NavBar = () => {
             gap: 2,
           }}
         >
-          <SearchBar />
+          <SearchBar PlaceHolder={"What’s in your fridge? Start typing..."}/>
           {isAuthenticated ? (
             <Box
               sx={{
