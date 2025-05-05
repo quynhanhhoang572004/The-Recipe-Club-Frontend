@@ -39,8 +39,6 @@ const signInPage = () => {
             gap: 2,
           }}
         >
-       
-        
         </Box>
         <SignInForm />
       </Card>

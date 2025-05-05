@@ -3,6 +3,7 @@ import SignInpage from "@/pages/auth/sign-in-page";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignUpPage from "./pages/auth/sign-up-page";
 import { AuthProvider } from "@/components/hooks/contexts/AuthContext"; 
+import HomepageAfterLogin from "./pages/homepage/homepage-with-login";
 
 const App = () => {
     return ( 
@@ -12,7 +13,7 @@ const App = () => {
           <Route element={<AuthLayout />}>
             <Route path="/signin" element={<SignInpage />} />
             <Route path="/signup" element={<SignUpPage />} />
-           
+            <Route path="/homepage" element={<HomepageAfterLogin/>} />
           </Route>
         </Routes>
       </BrowserRouter>
