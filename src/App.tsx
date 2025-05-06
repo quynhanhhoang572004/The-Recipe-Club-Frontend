@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignUpPage from "./pages/auth/sign-up-page";
 import { AuthProvider } from "@/components/hooks/contexts/AuthContext"; 
 import MyPantryPage from "./pages/my-pantry/my-pantry-page";
+import Home from "./pages/homepage/home";
+
 
 const App = () => {
     return ( 
@@ -11,9 +13,11 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route element={<AuthLayout />}>
+            <Route path="/" element={<Home />} />
             <Route path="/signin" element={<SignInpage />} />
             <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/mypantry" element ={<MyPantryPage/>}/>
+            <Route path="/mypantry" element={<MyPantryPage/>}/>
+            
            
           </Route>
         </Routes>
@@ -21,5 +25,6 @@ const App = () => {
       </AuthProvider>
     );
   };
+ 
 
 export default App;

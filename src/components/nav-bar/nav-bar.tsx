@@ -125,7 +125,7 @@ const NavBar = () => {
               <NavBarLink href="/" isActive={pathname === "/"}>
                 Home
               </NavBarLink>
-              <NavBarLink href="/about" isActive={pathname === "/about"}>
+              <NavBarLink href="/home" isActive={pathname === "/home"}>
                 About
               </NavBarLink>
               <NavBarLink
