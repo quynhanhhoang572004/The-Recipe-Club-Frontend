@@ -60,17 +60,23 @@ const AuthButton = styled(Button)<{
 const NavBar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { isAuthenticated, logout } = useAuth();
+  const  isAuthenticated = false;
+  
 
   return (
     <AppBar
+      elevation={0}
       sx={{
         position: "fixed",
         backgroundColor: "#FFFFF6",
         justifyContent: "center",
         height: "4.5rem",
         border: "none",
-        boxShadow: "none",
+        borderWidth: "0px",
+        borderStyle: "none",
+        outline: "none",
+        boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.08)",
+        zIndex: (theme) => theme.zIndex.drawer + 1,
       }}
     >
       <Toolbar
@@ -120,14 +126,14 @@ const NavBar = () => {
               <NavBarLink href="/" isActive={pathname === "/"}>
                 Home
               </NavBarLink>
-              <NavBarLink href="/about" isActive={pathname === "/about"}>
+              <NavBarLink href="/home" isActive={pathname === "/home"}>
                 About
               </NavBarLink>
               <NavBarLink
-                href="/find-recipe"
-                isActive={pathname === "/find-recipe"}
+                href="/mypantry"
+                isActive={pathname === "/mypantry"}
               >
-                Find Your Recipe
+                My pantry
               </NavBarLink>
             </Box>
           </Box>
@@ -139,7 +145,7 @@ const NavBar = () => {
             gap: 2,
           }}
         >
-          <SearchBar />
+          <SearchBar PlaceHolder={"What’s in your fridge? Start typing..."} Width="24rem"/>
           {isAuthenticated ? (
             <Box
               sx={{

@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+<<<<<<< HEAD
+.env
+=======
+/nbproject/private/
+>>>>>>> 1f6d301c9ab0e0d92a9372a8db54b1b009ec5384
