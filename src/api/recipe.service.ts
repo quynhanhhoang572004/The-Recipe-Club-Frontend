@@ -1,4 +1,4 @@
-import apiClient from "../lib/apiClient";
+import axiosClient from "@/lib/axiosClient";
 
 export type Recipe = {
   id: string;
@@ -9,12 +9,10 @@ export type Recipe = {
 
 export const getRecommendedRecipes = async (): Promise<Recipe[]> => {
   try {
-    const response = await apiClient.get('/recipes/recommend');
+    const response = await axiosClient.get("/recipes/recommend");
     return Array.isArray(response.data.recipes) ? response.data.recipes : [];
   } catch (error) {
     console.error("Error fetching recommended recipes:", error);
     return [];
   }
 };
-
-export default apiClient;

@@ -1,4 +1,11 @@
-import { Box, Card, CardMedia, CardContent, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Button,
+} from "@mui/material";
 import Footer from "../../components/Footer";
 import { useEffect, useState } from "react";
 import { getRecommendedRecipes, Recipe } from "../../api/recipe.service";
@@ -75,8 +82,9 @@ const HomepageAfterLogin = () => {
             sx={{
               color: "#FF885B",
               fontWeight: "bold",
-              mb: 1
-            }}>
+              mb: 1,
+            }}
+          >
             {name}
           </Typography>
           <Typography variant="body1" sx={{ mb: 3 }}>
@@ -87,8 +95,8 @@ const HomepageAfterLogin = () => {
             sx={{
               backgroundColor: "#FF885B",
               "&:hover": {
-                backgroundColor: "#FF9000"
-              }
+                backgroundColor: "#FF9000",
+              },
             }}
           >
             What’s In Your Kitchen?
@@ -100,7 +108,7 @@ const HomepageAfterLogin = () => {
           sx={{
             width: { xs: "25%", sm: "40%", md: "45%" },
             height: "auto",
-            mt: { xs: 4, md: 0 }
+            mt: { xs: 4, md: 0 },
           }}
         />
       </Box>
@@ -139,7 +147,7 @@ const HomepageAfterLogin = () => {
                   flexGrow: 2,
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "space-between"
+                  justifyContent: "space-between",
                 }}
               >
                 <Typography variant="h6" fontWeight="bold">
@@ -149,8 +157,9 @@ const HomepageAfterLogin = () => {
                   sx={{
                     display: "flex",
                     justifyContent: "flex-end",
-                    gap: 1
-                  }}>
+                    gap: 1,
+                  }}
+                >
                   <FavoriteBorderIcon fontSize="small" />
                   <ChatBubbleOutlineIcon fontSize="small" />
                 </Box>

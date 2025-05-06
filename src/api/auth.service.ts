@@ -1,21 +1,20 @@
-import apiClient from "@/lib/apiClient";
-
+import axiosClient from "@/lib/axiosClient";
+import { GetUserResponseProps } from "@/types/user";
 
 export const loginApi = async (data: { account: string; password: string }) => {
-  const res = await apiClient.post("/auth/signin", data);
+  const res = await axiosClient.post("/auth/signin", data);
   return res.data.data.access_token;
 };
 
-export const signupApi = async (data: { account: string; password: string }) => {
-  const res = await apiClient.post("/auth/signup", data);
+export const signupApi = async (data: {
+  account: string;
+  password: string;
+}) => {
+  const res = await axiosClient.post("/auth/signup", data);
   return res.data.data.access_token;
 };
 
 export const getMe = async () => {
-  const token = localStorage.getItem("access_token");
-  const res = await apiClient.get("/auth/me", {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const res = await axiosClient.get<GetUserResponseProps>("/auth/me");
   return res.data;
 };
-

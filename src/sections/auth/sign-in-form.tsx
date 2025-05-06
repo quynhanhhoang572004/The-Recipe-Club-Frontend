@@ -19,12 +19,14 @@ import {
   signInSchema,
 } from "@/types/auth/signin";
 import toast from "react-hot-toast";
-import { loginApi } from "@/api/auth.service";
-import { useAuth } from "@/components/hooks/contexts/AuthContext";
+import { getMe, loginApi } from "@/api/auth.service";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "@/hooks/use-app-dispatch";
+import { setToken } from "@/utils/token";
+import { signIn } from "@/stores/user-slice";
 
 const SignInForm = () => {
-  const { login } = useAuth();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [focusInput, setFocusInput] = useState<keyof SignInFormProps | null>(
     "account",
@@ -52,20 +54,19 @@ const SignInForm = () => {
     async (data) => {
       try {
         setLoading(true);
-  
         const promise = loginApi({
           account: data.account,
           password: data.password,
         });
-  
         const token = await toast.promise(promise, {
           loading: "Signing in...",
           success: "Signed in successfully",
           error: "Invalid account or password",
         });
-  
-        login(token);       
-        navigate("/");       
+        const user = await getMe();
+        dispatch(signIn(user.data));
+        setToken("access_token", token);
+        navigate("/");
       } catch (error) {
         toast.error("Login failed");
         console.error(error);
@@ -73,7 +74,7 @@ const SignInForm = () => {
         setLoading(false);
       }
     },
-    [login, navigate]
+    [dispatch, navigate],
   );
 
   useLayoutEffect(() => {

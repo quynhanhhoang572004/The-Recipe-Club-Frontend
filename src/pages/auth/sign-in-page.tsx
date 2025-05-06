@@ -31,15 +31,6 @@ const signInPage = () => {
           marginTop: "0.3125rem",
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 2,
-          }}
-        >
-        </Box>
         <SignInForm />
       </Card>
     </Box>
