@@ -6,6 +6,7 @@ import { AuthProvider } from "@/components/hooks/contexts/AuthContext";
 import MyPantryPage from "./pages/my-pantry/my-pantry-page";
 import Home from "./pages/homepage/home";
 
+import HomepageAfterLogin from "./pages/homepage/homepage-with-login";
 
 const App = () => {
     return ( 
@@ -19,6 +20,7 @@ const App = () => {
             <Route path="/mypantry" element={<MyPantryPage/>}/>
             
            
+            <Route path="/home" element={<HomepageAfterLogin/>} />
           </Route>
         </Routes>
       </BrowserRouter>

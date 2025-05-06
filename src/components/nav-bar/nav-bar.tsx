@@ -60,7 +60,8 @@ const AuthButton = styled(Button)<{
 const NavBar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { isAuthenticated, logout } = useAuth();
+  const  isAuthenticated = false;
+  
 
   return (
     <AppBar
