@@ -13,7 +13,11 @@ const MyPantryPage = () => {
         <Box sx={{ display: "flex", flexGrow: 2, marginTop: "4.5rem" }}>
           
           <SideBar>
-         
+     <Box sx ={{
+      textAlign: "center",
+      justifyContent:"center"
+
+     }}>
             <Typography
               sx={{
                 color: "#FF885B",
@@ -34,8 +38,16 @@ const MyPantryPage = () => {
             >
               you have ingredient
             </Typography>
+            </Box>
+            <Box sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems:"center",
+              marginBottom : "1.5rem"
+            }}>
             
-            <SearchBar PlaceHolder="add/remove/paste ingredient"/>
+            <SearchBar PlaceHolder="add/remove/paste ingredient" Width="20rem"/>
+            </Box>
             <IngredientGroup />
           </SideBar>
         </Box>

@@ -144,7 +144,7 @@ const NavBar = () => {
             gap: 2,
           }}
         >
-          <SearchBar PlaceHolder={"What’s in your fridge? Start typing..."}/>
+          <SearchBar PlaceHolder={"What’s in your fridge? Start typing..."} Width="24rem"/>
           {isAuthenticated ? (
             <Box
               sx={{

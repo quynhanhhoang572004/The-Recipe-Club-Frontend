@@ -6,10 +6,11 @@ import { useNavigate } from "react-router-dom";
 
 interface SearchBarProps{
   PlaceHolder: string,
+  Width : string,
 }
 
 
-const SearchBar = ({PlaceHolder}: SearchBarProps) => {
+const SearchBar = ({PlaceHolder, Width}: SearchBarProps) => {
   const searchRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const onHandleKey = useCallback(
@@ -30,7 +31,7 @@ const SearchBar = ({PlaceHolder}: SearchBarProps) => {
       variant="outlined"
       placeholder={PlaceHolder}
       sx={{
-        width: "24rem",
+        width: Width,
       
         
         "& .MuiInputBase-root": {
