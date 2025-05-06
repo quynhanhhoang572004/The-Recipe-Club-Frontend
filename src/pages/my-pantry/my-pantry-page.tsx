@@ -4,11 +4,13 @@ import { Box, Typography } from "@mui/material";
 import IngredientGroup from "@/sections/pantry-ingredient/ingredient-group";
 import SideBar from "@/components/side-bar/side-bar";
 import SearchBar from "@/components/inputs/search-bar";
+import { useState } from "react";
 
 const MyPantryPage = () => {
+  const [pantryCount, setPantryCount] = useState(0);
   return (
     <AuthProvider>
-      <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+      <Box sx={{ display: "flex", flexDirection: "column", height: "100vh",  bgcolor:"#FFFF6"}}>
         <NavBar />
         <Box sx={{ display: "flex", flexGrow: 2, marginTop: "4.5rem" }}>
           
@@ -36,7 +38,14 @@ const MyPantryPage = () => {
                 marginBottom: 2,
               }}
             >
-              you have ingredient
+             You have  
+              <span style={{
+                fontSize:"1.2 rem",
+                color:"#FF885B",
+                fontWeight: 500
+             }}> {pantryCount}{" "}
+             {pantryCount === 1 ? "item" : "items"}</span> in your pantry
+
             </Typography>
             </Box>
             <Box sx={{
@@ -48,7 +57,8 @@ const MyPantryPage = () => {
             
             <SearchBar PlaceHolder="add/remove/paste ingredient" Width="20rem"/>
             </Box>
-            <IngredientGroup />
+            <IngredientGroup onCountChange={setPantryCount} />
+            
           </SideBar>
         </Box>
       </Box>

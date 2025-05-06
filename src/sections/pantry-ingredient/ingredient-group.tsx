@@ -2,18 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { Category, Ingredient } from '@/types/pantry/ingredient';
 import PantryCategoryBlock from '@/components/pantry-category/pantry-category-block';
-import { fetchCategories, fetchIngredients, fetchUserPantry } from '@/api/my-pantry.service';
+import { fetchCategories, fetchIngredients, fetchUserPantry,putUserPantry } from '@/api/my-pantry.service';
 
-const IngredientGroup: React.FC = () => {
+interface Props {
+  onCountChange?: (count: number) => void;  
+}
+
+const IngredientGroup = ({ onCountChange }:Props) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const [loading, setLoading] = useState(true);
+  
+  const reportCount = (ids: Set<number>) => {
+    if (onCountChange) onCountChange(ids.size);
+  };
 
   useEffect(() => {
     const fetchPantry = async () => {
       try {
-        const categoriesData = await fetchCategories();
-        const ingredientsData = await fetchIngredients();
+        const [cats, ings] = await Promise.all([
+          fetchCategories(),
+          fetchIngredients(),
+        ]);
 
 
         const accessToken = localStorage.getItem('access_token');
@@ -30,14 +41,16 @@ const IngredientGroup: React.FC = () => {
          }
         }
 
-        const mergedIngredients = ingredientsData.map((i: Ingredient) => ({
+        const mergedIngredients = ings.map((i: Ingredient) => ({
           ...i,
           category_id: i.category_id ?? i.category?.id,
           selected: userIngredientIds.has(i.id),
         }));
 
-        setCategories(categoriesData);
+        setCategories(cats);
         setIngredients(mergedIngredients);
+        setSelectedIds(userIngredientIds)
+        reportCount(userIngredientIds);
       } catch {
         
       } finally {
@@ -47,6 +60,28 @@ const IngredientGroup: React.FC = () => {
 
     fetchPantry();
   }, []);
+
+  const toggleIngredient = async (id: number) => {
+    const next = new Set(selectedIds);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+
+    setSelectedIds(next);
+    setIngredients((prev) =>
+      prev.map((i) =>
+        i.id === id ? { ...i, selected: next.has(id) } : i
+      )
+    );
+    reportCount(next);
+
+    try {
+      const token = localStorage.getItem("access_token")!;
+      await putUserPantry(token, Array.from(next));
+    } catch (err) {
+      console.error("Save error:", err);
+     
+    }
+  };
 
   if (loading) return <CircularProgress />;
 
@@ -63,6 +98,8 @@ const IngredientGroup: React.FC = () => {
             key={category.id}
             category={category.name}
             items={items}
+            selectedIds={selectedIds}       
+            onToggle={toggleIngredient}
           />
         );
       })}

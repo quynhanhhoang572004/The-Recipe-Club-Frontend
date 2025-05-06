@@ -129,10 +129,10 @@ const NavBar = () => {
                 About
               </NavBarLink>
               <NavBarLink
-                href="/find-recipe"
-                isActive={pathname === "/find-recipe"}
+                href="/mypantry"
+                isActive={pathname === "/mypantry"}
               >
-                Find Your Recipe
+                My pantry
               </NavBarLink>
             </Box>
           </Box>

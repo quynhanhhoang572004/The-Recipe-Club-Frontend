@@ -19,3 +19,19 @@ export const fetchUserPantry = async (accessToken: string) => {
     });
     return response.data?.data ?? [];
 }
+
+export const putUserPantry = async (accessToken: string, ingredientsIds:number[]): Promise<number[]> => {
+    const body = {ingredient_ids:ingredientsIds};
+
+    const response = await apiClient.put<{ data: number[] }>(
+        "/users/pantries",
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      return response.data?.data ?? [];
+  
+}
