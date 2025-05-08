@@ -7,6 +7,7 @@ import { useState } from "react";
 
 const MyPantryPage = () => {
   const [pantryCount, setPantryCount] = useState(0);
+  const [recipeCount, setRecipesCount] = useState(0);
   return (
     <Box
       sx={{
@@ -14,10 +15,14 @@ const MyPantryPage = () => {
         flexDirection: "column",
         height: "100vh",
         bgcolor: "#FFFF6",
+         backgroundPosition: "center",
+         backgroundRepeat: "no-repeat",
+        
       }}
     >
       <NavBar />
-      <Box sx={{ display: "flex", flexGrow: 2, marginTop: "4.5rem" }}>
+    
+      <Box sx={{ display: "flex", flexGrow: 2, marginTop: "4.5rem",  alignItems: "flex-start",  height: "100vh",}}>
         <SideBar>
           <Box
             sx={{
@@ -28,7 +33,7 @@ const MyPantryPage = () => {
             <Typography
               sx={{
                 color: "#FF885B",
-                fontSize: 20,
+                fontSize: 30,
                 marginTop: 2,
                 marginBottom: 1,
                 fontWeight: 600,
@@ -46,12 +51,12 @@ const MyPantryPage = () => {
               You have
               <span
                 style={{
-                  fontSize: "1.2 rem",
+                  fontSize: "1.3rem",
                   color: "#FF885B",
                   fontWeight: 500,
                 }}
               >
-                {pantryCount} {pantryCount === 1 ? "item" : "items"}
+              {" "}{pantryCount} {pantryCount === 1 ? "item" : "items"}
               </span>{" "}
               in your pantry
             </Typography>
@@ -71,6 +76,31 @@ const MyPantryPage = () => {
           </Box>
           <IngredientGroup onCountChange={setPantryCount} />
         </SideBar>
+
+        <Box 
+        sx={{
+          flexGrow: 1, 
+          padding: 3,
+          bgcolor :"#FFFFF6",
+          display:"flex",
+          justifyContent: "center",
+          alignItems: "center",  
+        }}>
+          <Typography
+          sx={{
+            color: "#FF885B",
+                fontSize: 30,
+                marginTop: 2,
+                marginBottom: 1,
+                fontWeight: 600,
+                height: "100vh",
+                textAlign:"center"
+          }}>
+            Suggest Ingredient
+
+          </Typography>
+          
+        </Box>
       </Box>
     </Box>
   );
