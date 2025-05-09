@@ -36,7 +36,7 @@ const HomepageAfterLogin = () => {
     const fetchRecipes = async () => {
       try {
         const data = await getRecommendedRecipes();
-        setRecipes(Array.isArray(data) ? data.slice(0, 10) : []);
+        setRecipes(data.recipes.slice(0, 10));
         setError(null);
       } catch (err) {
         console.error("Error loading recipes:", err);

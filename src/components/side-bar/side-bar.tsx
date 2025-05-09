@@ -13,7 +13,7 @@ const SideBar = ({ children }: SideBarProps) => {
     <Box
         sx={{
             width: 400,
-            height: '100vh',
+            height: '100%',
             overflowY: 'auto',
             p: 2,
             backgroundColor: "#FFFFF6",
