@@ -1,4 +1,4 @@
-import { Card, CardContent, CardMedia, Typography } from "@mui/material"
+import { Card, CardContent, CardMedia, Link, Typography } from "@mui/material"
 
 interface Props{
     name: string,
@@ -8,6 +8,11 @@ interface Props{
 }
 
 const RecipeCard = ({name, link_recipe, image_url, num_of_ingredient}: Props) =>{
+
+     const formattedLink = link_recipe.startsWith("http")
+    ? link_recipe
+    : `https://${link_recipe}`;
+
     return(
     <Card
     sx={{
@@ -30,17 +35,27 @@ const RecipeCard = ({name, link_recipe, image_url, num_of_ingredient}: Props) =>
             }}>
                 {name}
             </Typography>
-            <Typography
+           
+            <Typography 
+            sx={{
+            color: "#FF885B",
+            
+            }}>
+                You have <span>{num_of_ingredient}</span> {" "} match ingredient
+            </Typography>
+             <Link
             sx={{
                 fontSize:13,
                 fontWeight:500,
                   
-            }}>
+            }}
+            href={formattedLink}
+             target="_blank" 
+              rel="noopener noreferrer"
+            >
+                
                 {link_recipe}
-            </Typography>
-            <Typography>
-                You have <span>{num_of_ingredient}</span> {" "} match ingredient
-            </Typography>
+            </Link>
 
         </CardContent>
 

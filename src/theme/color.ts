@@ -12,3 +12,9 @@ export const grey = {
     900: "#212121",
     950: "#1A1A1A",
   };
+ export const palette = {
+  primary: {
+    main: "#FF885B",
+  },
+  grey,
+};

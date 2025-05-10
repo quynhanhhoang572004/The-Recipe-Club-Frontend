@@ -13,8 +13,9 @@ const SideBar = ({ children }: SideBarProps) => {
     <Box
         sx={{
             width: 400,
-            height: '100%',
+            height: '180vh',
             overflowY: 'auto',
+            position: "sticky",
             p: 2,
             backgroundColor: "#FFFFF6",
             borderRight: '1px solid #ddd',
