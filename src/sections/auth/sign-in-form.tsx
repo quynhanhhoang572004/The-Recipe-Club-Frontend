@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import {
   Box,
   Button,
@@ -19,8 +19,15 @@ import {
   signInSchema,
 } from "@/types/auth/signin";
 import toast from "react-hot-toast";
+import { getMe, loginApi } from "@/api/auth.service";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "@/hooks/use-app-dispatch";
+import { setToken } from "@/utils/token";
+import { signIn } from "@/stores/user-slice";
 
 const SignInForm = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [focusInput, setFocusInput] = useState<keyof SignInFormProps | null>(
     "account",
   );
@@ -43,29 +50,32 @@ const SignInForm = () => {
     }
   };
 
-  const onSubmit: SubmitHandler<SignInFormProps> = useCallback(async (data) => {
-    try {
-      setLoading(true);
-      toast.promise(
-        new Promise((resolve) => setTimeout(resolve, 3000)).then(() => {
-          console.log(data);
-          return true;
-        }),
-        {
+  const onSubmit: SubmitHandler<SignInFormProps> = useCallback(
+    async (data) => {
+      try {
+        setLoading(true);
+        const promise = loginApi({
+          account: data.account,
+          password: data.password,
+        });
+        const token = await toast.promise(promise, {
           loading: "Signing in...",
           success: "Signed in successfully",
-          error: "Failed to sign in",
-        },
-      );
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
+          error: "Invalid account or password",
+        });
+        const user = await getMe();
+        dispatch(signIn(user.data));
+        setToken("access_token", token);
+        navigate("/");
+      } catch (error) {
+        toast.error("Login failed");
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    },
+    [dispatch, navigate],
+  );
 
   useLayoutEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -109,7 +119,7 @@ const SignInForm = () => {
             >
               No Account?{" "}
               <Link
-                 to="/signup"
+                to="/signup"
                 style={{
                   color: "#FF885B",
                   textDecoration: "underline",
@@ -311,8 +321,13 @@ const SignInForm = () => {
             style={{ background: "#FF885B", marginTop: "-0.625rem" }}
             loading={loading}
           >
-            <Box display="flex" alignItems="center" gap = {2}>
-              <img src="/icons/google-logo.svg" width={24} height={24} alt="google-logo" />
+            <Box display="flex" alignItems="center" gap={2}>
+              <img
+                src="/icons/google-logo.svg"
+                width={24}
+                height={24}
+                alt="google-logo"
+              />
               <Typography sx={{ fontWeight: 600 }}>
                 Sign in with Google
               </Typography>

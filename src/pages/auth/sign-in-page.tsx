@@ -1,7 +1,5 @@
 import SignInForm from "@/sections/auth/sign-in-form";
-import { Box, Card} from "@mui/material";
-
-
+import { Box, Card } from "@mui/material";
 
 const signInPage = () => {
   return (
@@ -13,22 +11,9 @@ const signInPage = () => {
         alignItems: "center",
         backgroundImage: `url(images/sign-in-background.png)`,
         backgroundRepeat: "no-repeat",
-        backgroundSize: "70%",
-        backgroundPosition: " left center",
+        backgroundSize: "contain",
         position: "relative",
         padding: "5rem",
-        margin: 0,
-
-        "&::before": {
-          content: '""', 
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-
-          zIndex: 1,
-        },
       }}
     >
       <Card
@@ -46,16 +31,6 @@ const signInPage = () => {
           marginTop: "0.3125rem",
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 2,
-          }}
-        >
-        
-        </Box>
         <SignInForm />
       </Card>
     </Box>

@@ -1,6 +1,6 @@
 import SearchBar from "@/components/inputs/search-bar";
+import { useAppSelector } from "@/hooks/use-app-selector";
 import { grey } from "@/theme/color";
-import { useAuth } from "@/components/hooks/contexts/AuthContext";
 
 import {
   AppBar,
@@ -51,8 +51,7 @@ const AuthButton = styled(Button)<{
     color: textColor,
   },
   "&:hover": {
-    backgroundColor:
-      backgroundColor === "white" ? "#FFF0E6" : "#e26b3f", // adjust hover based on type
+    backgroundColor: backgroundColor === "white" ? "#FFF0E6" : "#e26b3f",
     borderColor: "#FF885B",
   },
 }));
@@ -60,18 +59,23 @@ const AuthButton = styled(Button)<{
 const NavBar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated } = useAppSelector((state) => state.user);
 
   return (
     <AppBar
+      elevation={0}
       sx={{
         position: "fixed",
+        top: 0,
         backgroundColor: "#FFFFF6",
         justifyContent: "center",
         height: "4.5rem",
         border: "none",
-        borderRadius: 0,
-        boxShadow: "0 0.25rem 0.625rem #0000001a",
+        borderWidth: "0px",
+        borderStyle: "none",
+        outline: "none",
+        boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.08)",
+        zIndex: (theme) => theme.zIndex.drawer + 1,
       }}
     >
       <Toolbar
@@ -121,14 +125,11 @@ const NavBar = () => {
               <NavBarLink href="/" isActive={pathname === "/"}>
                 Home
               </NavBarLink>
-              <NavBarLink href="/about" isActive={pathname === "/about"}>
+              <NavBarLink href="/home" isActive={pathname === "/home"}>
                 About
               </NavBarLink>
-              <NavBarLink
-                href="/find-recipe"
-                isActive={pathname === "/find-recipe"}
-              >
-                Find Your Recipe
+              <NavBarLink href="/mypantry" isActive={pathname === "/mypantry"}>
+                My pantry
               </NavBarLink>
             </Box>
           </Box>
@@ -140,27 +141,23 @@ const NavBar = () => {
             gap: 2,
           }}
         >
-          <SearchBar />
+          <SearchBar
+            PlaceHolder={"What’s in your fridge? Start typing..."}
+            Width="24rem"
+          />
           {isAuthenticated ? (
-            <Box
-              sx={{
-                color: "#FF885B",
-                alignItems: "center",
-                display: "flex",
-                gap: 2,
-              }}
-            >
+            <>
               <Tooltip title="Notification">
-                <IconButton color="inherit">
-                  <Settings />
+                <IconButton>
+                  <Settings color="#FF885B" />
                 </IconButton>
               </Tooltip>
-              <Tooltip title="Messages">
-                <IconButton color="inherit">
-                  <CircleUserRound />
+              <Tooltip title="User profile">
+                <IconButton>
+                  <CircleUserRound color="#FF885B" />
                 </IconButton>
               </Tooltip>
-            </Box>
+            </>
           ) : (
             <>
               <AuthButton
