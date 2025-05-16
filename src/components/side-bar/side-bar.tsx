@@ -12,10 +12,12 @@ const SideBar = ({ children }: SideBarProps) => {
     <>
     <Box
         sx={{
+             position: "fixed",
+        top: "4.5rem",
             width: 400,
             height: '180vh',
             overflowY: 'auto',
-            position: "sticky",
+         
             p: 2,
             backgroundColor: "#FFFFF6",
             borderRight: '1px solid #ddd',

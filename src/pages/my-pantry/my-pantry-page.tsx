@@ -1,12 +1,18 @@
 import NavBar from "@/components/nav-bar/nav-bar";
-import { Box, Typography, Pagination } from "@mui/material";
+import { Box, Typography, Pagination, Button } from "@mui/material";
 import IngredientGroup from "@/sections/pantry-ingredient/ingredient-group";
 import SideBar from "@/components/side-bar/side-bar";
 import SearchBar from "@/components/inputs/search-bar";
 import { useEffect, useState } from "react";
 import PantryTag from "@/components/pantry-tag/pantry-tag";
-import { Recipe, getRecommendedRecipes } from "@/api/recipe.service";
+import {
+  Recipe,
+  getRecommendedRecipes,
+  getRecipeById,
+  RecipeDetail,
+} from "@/api/recipe.service";
 import RecipeCard from "@/components/recipe-card/recipe-card";
+import RecipeDetailCard from "@/components/recipe-detail/recipe-detail";
 
 const MyPantryPage = () => {
   const tags = [
@@ -27,9 +33,28 @@ const MyPantryPage = () => {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [pantryUpdated, setPantryUpdated] = useState(false);
+  const [selectedRecipeId, setSelectedRecipeId] = useState<string | null>(null);
+  const [selectedRecipe, setSelectedRecipe] = useState<RecipeDetail | null>(
+    null,
+  );
 
   const [currentPage, setCurrentPage] = useState(1);
   const recipesPerPage = 20;
+
+  useEffect(() => {
+    const fetchDetailRecipe = async () => {
+      if (!selectedRecipeId) return;
+
+      try {
+        const response = await getRecipeById(selectedRecipeId);
+        setSelectedRecipe(response);
+      } catch (error) {
+        console.error("Error fetching recipe detail:", error);
+      }
+    };
+
+    fetchDetailRecipe();
+  }, [selectedRecipeId]);
 
   useEffect(() => {
     const fetchTotalRecipes = async () => {
@@ -84,8 +109,9 @@ const MyPantryPage = () => {
           sx={{
             width: "25rem",
             flexShrink: 0,
-            height: "100%",
             position: "sticky",
+            top: "4.5rem",
+            alignSelf: "flex-start",
           }}
         >
           <SideBar>
@@ -191,13 +217,18 @@ const MyPantryPage = () => {
           <Box sx={{ alignItems: "center" }}>
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 2 }}>
               {currentRecipes.map((recipe) => (
-                <RecipeCard
+                <Box
                   key={recipe.id}
-                  name={recipe.title}
-                  link_recipe={recipe.domain}
-                  image_url={recipe.image_url}
-                  num_of_ingredient={recipe.matched_ingredients}
-                />
+                  onClick={() => setSelectedRecipeId(recipe.id)}
+                  sx={{ cursor: "pointer" }}
+                >
+                  <RecipeCard
+                    name={recipe.title}
+                    link_recipe={recipe.domain}
+                    image_url={recipe.image_url}
+                    num_of_ingredient={recipe.matched_ingredients}
+                  />
+                </Box>
               ))}
             </Box>
 
@@ -219,6 +250,28 @@ const MyPantryPage = () => {
                 color="primary"
                 shape="rounded"
               />
+            </Box>
+            <Box>
+              {selectedRecipe && (
+                <RecipeDetailCard
+                  name={selectedRecipe.title}
+                  image_url={selectedRecipe.image_url}
+                  num_of_ingredient={
+                    selectedRecipe.matched_ingredients
+                  }
+                  link_recipe={selectedRecipe.domain}
+                  ingedient={selectedRecipe.ingredients}
+                  nutrition_fact={Object.entries(
+                    selectedRecipe.nutrition_facts,
+                  ).map(
+                    ([key, value]) => `${key.replace(/_/g, " ")}: ${value}`,
+                  )}
+                  onClose={() => {
+                    setSelectedRecipeId(null);
+                    setSelectedRecipe(null);
+                  }}
+                />
+              )}
             </Box>
           </Box>
         </Box>
