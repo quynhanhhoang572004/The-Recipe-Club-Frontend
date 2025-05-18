@@ -33,7 +33,7 @@ const RecipeDetail = ({
   nutrition_fact,
   onClose,
 }: Props) => {
-    const formattedLink = link_recipe.startsWith("http")
+  const formattedLink = link_recipe.startsWith("http")
     ? link_recipe
     : `https://${link_recipe}`;
 
@@ -138,21 +138,21 @@ const RecipeDetail = ({
               fontSize: "1rem",
               color: "#FFFFF6",
               "&:hover": { backgroundColor: "#d35400" },
-              alignItems:"center",
-              justifyContent:"center",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-             <Box>
-    <Typography variant="subtitle1" sx={{ lineHeight: 1.0 }}>
-      View Full Recipe
-    </Typography>
-    <Typography
-      variant="caption"
-      sx={{  color: "#FFFFF6", opacity: 0.9 }}
-    >
-      {formattedLink}
-    </Typography>
-  </Box>
+            <Box>
+              <Typography variant="subtitle1" sx={{ lineHeight: 1.0 }}>
+                View Full Recipe
+              </Typography>
+              <Typography
+                variant="caption"
+                sx={{ color: "#FFFFF6", opacity: 0.9 }}
+              >
+                {formattedLink}
+              </Typography>
+            </Box>
           </Button>
 
           <Divider sx={{ my: 2 }} />

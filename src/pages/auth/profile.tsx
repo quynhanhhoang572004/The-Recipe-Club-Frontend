@@ -171,7 +171,7 @@ const UserProfile = () => {
             fontWeight: 600,
             color: "#ff885b",
             textAlign: "center",
-            fontSize: "3em"
+            fontSize: "3em",
           }}
         >
           User profile
@@ -233,7 +233,6 @@ const UserProfile = () => {
             fontWeight: 500,
             fontSize: "1.2em",
             color: "#ff885b",
-            
           }}
         >
           Change Password

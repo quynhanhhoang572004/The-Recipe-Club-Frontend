@@ -1,14 +1,16 @@
 import { Box, Button, Typography } from "@mui/material";
-import HeroSection from "@/components/homePage-withoutlogin/hero-section";
+import HeroSection from "@/components/home/hero-section";
 import { useNavigate } from "react-router-dom";
-import ReviewSection from "@/components/homePage-withoutlogin/review";
+import ReviewSection from "@/components/home/review";
 import NavBar from "@/components/nav-bar/nav-bar";
+import SeoMetaTags from "@/components/seo-meta-tags";
 
 const Home = () => {
   const navigate = useNavigate();
 
   return (
     <Box sx={{ backgroundColor: "#FFFFF6", position: "relative" }}>
+      <SeoMetaTags title="Home" />
       <NavBar />
       <HeroSection />
       <ReviewSection />
