@@ -10,7 +10,7 @@ const footer = () => {
         py: 2,
       }}
     >
-    <Typography variant="text" color="textSecondary">
+    <Typography color="textSecondary">
       © {new Date().getFullYear()} Unipin, Inc. All Rights Reserved.
     </Typography>
     </Box>

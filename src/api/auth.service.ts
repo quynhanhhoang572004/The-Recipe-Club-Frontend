@@ -3,7 +3,9 @@ import { GetUserResponseProps } from "@/types/user";
 
 export const loginApi = async (data: { account: string; password: string }) => {
   const res = await axiosClient.post("/auth/signin", data);
-  return res.data.data.access_token;
+  const token = res.data.data.access_token;
+  localStorage.setItem("access_token", token);
+  return token;
 };
 
 export const signupApi = async (data: {

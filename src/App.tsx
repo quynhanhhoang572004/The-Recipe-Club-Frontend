@@ -4,14 +4,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignUpPage from "./pages/auth/sign-up-page";
 
 import Profile from "./pages/auth/profile";
-import { AuthProvider } from "@/components/hooks/contexts/AuthContext";
+
 import MyPantryPage from "./pages/my-pantry/my-pantry-page";
 import Home from "./pages/homepage/home";
 import HomepageAfterLogin from "./pages/homepage/homepage-with-login";
 
 const App = () => {
   return (
-    <AuthProvider>
+  
       <BrowserRouter>
         <Routes>
           <Route element={<AuthLayout />}>
@@ -24,7 +24,7 @@ const App = () => {
           </Route>
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
+   
   );
 };
 
