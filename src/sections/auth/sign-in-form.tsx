@@ -63,9 +63,9 @@ const SignInForm = () => {
           success: "Signed in successfully",
           error: "Invalid account or password",
         });
+        setToken("access_token", token);
         const user = await getMe();
         dispatch(signIn(user.data));
-        setToken("access_token", token);
         navigate("/");
       } catch (error) {
         toast.error("Login failed");

@@ -6,6 +6,16 @@ export type Recipe = {
   image_url: string;
   rating: number;
 };
+export type RecipeDetail = {
+  id: string;
+  title: string;
+  image_url: string;
+  domain: string;
+  ingredients: string[];
+  nutrition_facts: NutritionFacts;
+  matched_ingredients: number;
+};
+
 
 export const getRecommendedRecipes = async (): Promise<Recipe[]> => {
   try {
@@ -14,5 +24,19 @@ export const getRecommendedRecipes = async (): Promise<Recipe[]> => {
   } catch (error) {
     console.error("Error fetching recommended recipes:", error);
     return [];
+  }
+};
+
+export const getRecipeById = async (recipeId?: string): Promise<RecipeDetail | null> => {
+  if (!recipeId) {
+    console.error("Invalid Recipe ID:", recipeId);
+    return null;
+  }
+  try {
+    const response = await axiosClient.get(`/recipes/${recipeId}`);
+    return response.data as RecipeDetail;
+  } catch (error) {
+    console.error(`Error fetching recipe ${recipeId}:`, error);
+    return null;
   }
 };
