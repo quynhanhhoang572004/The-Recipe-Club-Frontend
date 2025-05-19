@@ -7,7 +7,7 @@ interface SeoMetaTagsProps {
 const SeoMetaTags = ({ title }: SeoMetaTagsProps) => {
   return (
     <Helmet>
-      <title>{title} - Recipe Admin</title>
+      <title>{title} - Recipe Club</title>
     </Helmet>
   );
 };

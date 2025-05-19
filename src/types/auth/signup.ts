@@ -30,11 +30,9 @@ export const signUpSchema = z
       .min(1, "Password is required")
       .regex(
         passwordRegex,
-        "Password must contain at least 1 letter, 1 number, and may include special characters"
+        "Password must contain at least 1 letter, 1 number, and may include special characters",
       ),
-    confirmPassword: z
-      .string()
-      .min(1, "Please confirm your password"),
+    confirmPassword: z.string().min(1, "Please confirm your password"),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",

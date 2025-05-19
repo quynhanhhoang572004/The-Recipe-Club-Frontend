@@ -1,16 +1,16 @@
-import React, {useState} from "react";
-import {Typography, Box, Divider } from "@mui/material";
+import React, { useState } from "react";
+import { Typography, Box, Divider } from "@mui/material";
 import PantryTag from "@/components/pantry-tag/pantry-tag";
 import { Ingredient } from "@/types/pantry/ingredient";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 
 interface Props {
   category: string;
   items: Ingredient[];
   maxVisible?: number;
   selectedIds: Set<number>;
-  onToggle: (id:number) => void;
+  onToggle: (id: number) => void;
 }
 
 const PantryCategoryBlock: React.FC<Props> = ({
@@ -22,15 +22,11 @@ const PantryCategoryBlock: React.FC<Props> = ({
 }) => {
   const [expanded, setExpanded] = useState(false);
 
-  const displayedItems = expanded
-  ? items
-  : items.slice(0, maxVisible);
+  const displayedItems = expanded ? items : items.slice(0, maxVisible);
 
   const hiddenCount = items.length - displayedItems.length;
- 
-  const selectedCount = items.filter((i) =>
-    selectedIds.has(i.id)
-  ).length;
+
+  const selectedCount = items.filter((i) => selectedIds.has(i.id)).length;
 
   return (
     <Box
@@ -43,7 +39,6 @@ const PantryCategoryBlock: React.FC<Props> = ({
         backgroundColor: "#F2F2F2",
       }}
     >
-     
       <Box
         sx={{
           display: "flex",
@@ -60,23 +55,25 @@ const PantryCategoryBlock: React.FC<Props> = ({
           sx={{ display: "flex", alignItems: "center", gap: 1 }}
         >
           {category}
-          {expanded ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />}
+          {expanded ? (
+            <ExpandLessIcon fontSize="small" />
+          ) : (
+            <ExpandMoreIcon fontSize="small" />
+          )}
         </Typography>
         <Typography variant="subtitle1" fontWeight={600}>
           {selectedCount}/{items.length}
         </Typography>
-      
       </Box>
-      <Divider 
-        sx={{ 
-          mt: 1, 
-          mb: 2, 
-          borderColor: '#FF885B', 
-          opacity: 0.6,  
-          height: '2px', 
-        }} 
+      <Divider
+        sx={{
+          mt: 1,
+          mb: 2,
+          borderColor: "#FF885B",
+          opacity: 0.6,
+          height: "2px",
+        }}
       />
-
 
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 2 }}>
         {displayedItems.map((item) => (

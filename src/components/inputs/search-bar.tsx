@@ -4,13 +4,12 @@ import { SearchIcon } from "lucide-react";
 import { useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-interface SearchBarProps{
-  PlaceHolder: string,
-  Width : string,
+interface SearchBarProps {
+  PlaceHolder: string;
+  Width: string;
 }
 
-
-const SearchBar = ({PlaceHolder, Width}: SearchBarProps) => {
+const SearchBar = ({ PlaceHolder, Width }: SearchBarProps) => {
   const searchRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const onHandleKey = useCallback(
@@ -21,7 +20,7 @@ const SearchBar = ({PlaceHolder, Width}: SearchBarProps) => {
         }
       }
     },
-    [],
+    [navigate],
   );
 
   return (
@@ -32,8 +31,7 @@ const SearchBar = ({PlaceHolder, Width}: SearchBarProps) => {
       placeholder={PlaceHolder}
       sx={{
         width: Width,
-      
-        
+
         "& .MuiInputBase-root": {
           height: "2.3rem",
           borderRadius: "0.625rem",
@@ -43,7 +41,7 @@ const SearchBar = ({PlaceHolder, Width}: SearchBarProps) => {
           fontSize: 16,
           color: grey[900],
           "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#FF885B", 
+            borderColor: "#FF885B",
           },
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
             borderColor: "#FF885B",
@@ -51,7 +49,7 @@ const SearchBar = ({PlaceHolder, Width}: SearchBarProps) => {
           },
         },
         "& .MuiOutlinedInput-notchedOutline": {
-          borderColor:'#FF885B' , 
+          borderColor: "#FF885B",
         },
       }}
       slotProps={{
