@@ -14,6 +14,8 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
+
+
 interface Props {
   name: string;
   image_url: string;

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ReviewSection from "@/components/home/review";
 import NavBar from "@/components/nav-bar/nav-bar";
 import SeoMetaTags from "@/components/seo-meta-tags";
+ 
 
 const Home = () => {
   const navigate = useNavigate();
