@@ -20,8 +20,4 @@ export const getMe = async () => {
   const res = await axiosClient.get<GetUserResponseProps>("/auth/me");
   return res.data;
 };
- 
-export const logoutApi = () => {
-  localStorage.removeItem("access_token");
-};
 

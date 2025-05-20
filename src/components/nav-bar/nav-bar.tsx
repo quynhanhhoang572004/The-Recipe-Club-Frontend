@@ -4,7 +4,7 @@ import { grey } from "@/theme/color";
 
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { signOut } from "@/stores/user-slice";
+import { signIn, signOut } from "@/stores/user-slice";
 
 import {
   AppBar,
@@ -80,10 +80,7 @@ const NavBar = () => {
   };
 
   const handleProfile = () => {
-    localStorage.removeItem("access_token");
-    dispatch(signOut());
-    handleClose();
-    navigate("/signin");
+    navigate("/profile");
   };
 
   const handleLogout = () => {

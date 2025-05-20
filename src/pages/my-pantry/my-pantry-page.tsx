@@ -238,12 +238,15 @@ const MyPantryPage = () => {
                   "& .Mui-selected": {
                     backgroundColor: "#FF885B",
                     color: "#FFFFFF",
+                    "&:hover": {
+                      backgroundColor: "#FF885B", 
+                    },
                   },
                   "& .MuiPaginationItem-root:hover": {
-                    backgroundColor: "#FF885B",
+                    backgroundColor: "rgba(255, 136, 91, 0.5)", 
                     color: "#FFFFFF",
                   },
-                }}
+                }}                 
                 count={totalPages}
                 page={currentPage}
                 onChange={(_, value) => setCurrentPage(value)}
