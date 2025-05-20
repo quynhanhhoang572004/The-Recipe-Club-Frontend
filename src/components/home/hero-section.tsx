@@ -11,18 +11,24 @@ const HeroSection: React.FC = () => {
   const [user, setUsername] = useState("");
   const { isAuthenticated } = useAppSelector((state) => state.user);
 
-  useEffect(() => {
-    const fetchMe = async () => {
-      try {
-        const response = await getMe();
-        setUsername(response.data.username); 
-      } catch (error) {
-        console.error("Failed to fetch user:", error);
-      }
-    };
+useEffect(() => {
+  if (!isAuthenticated) {
+    setUsername(""); 
+    return;
+  }
 
-    fetchMe();
-  }, []);
+  const fetchMe = async () => {
+    try {
+      const response = await getMe();
+      setUsername(response.data.username);
+    } catch (error) {
+      console.error("Failed to fetch user:", error);
+    }
+  };
+
+  fetchMe();
+}, [isAuthenticated]);
+
 
   return (
     <Box

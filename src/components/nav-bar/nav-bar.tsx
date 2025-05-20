@@ -2,6 +2,10 @@ import SearchBar from "@/components/inputs/search-bar";
 import { useAppSelector } from "@/hooks/use-app-selector";
 import { grey } from "@/theme/color";
 
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { signOut } from "@/stores/user-slice";
+
 import {
   AppBar,
   Box,
@@ -12,6 +16,8 @@ import {
   styled,
   Button,
   Typography,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import { CircleUserRound, Settings } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -60,6 +66,32 @@ const NavBar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { isAuthenticated } = useAppSelector((state) => state.user);
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const dispatch = useDispatch();
+
+  const handleSettingsClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleProfile = () => {
+    localStorage.removeItem("access_token");
+    dispatch(signOut());
+    handleClose();
+    navigate("/signin");
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    dispatch(signOut());
+    handleClose();
+    navigate("/signin");
+  };
 
   return (
     <AppBar
@@ -148,16 +180,28 @@ const NavBar = () => {
           />
           {isAuthenticated ? (
             <>
-              <Tooltip title="Notification">
-                <IconButton>
-                  <Settings color="#FF885B" />
-                </IconButton>
-              </Tooltip>
               <Tooltip title="User profile">
-                <IconButton>
+                <IconButton onClick={() => navigate("/profile")}>
                   <CircleUserRound color="#FF885B" />
                 </IconButton>
               </Tooltip>
+
+              <Tooltip title="Settings">
+                <IconButton onClick={handleSettingsClick}>
+                  <Settings color="#FF885B" />
+                </IconButton>
+              </Tooltip>
+
+              <Menu
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                transformOrigin={{ vertical: "top", horizontal: "right" }}
+              >
+                <MenuItem onClick={handleProfile}>User Profile</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              </Menu>
             </>
           ) : (
             <>

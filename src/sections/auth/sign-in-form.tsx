@@ -66,7 +66,8 @@ const SignInForm = () => {
         const user = await getMe();
         dispatch(signIn(user.data));
         setToken("access_token", token);
-        navigate("/");
+         setTimeout(() => navigate("/"), 0);
+        
       } catch (error) {
         toast.error("Login failed");
         console.error(error);
@@ -74,6 +75,7 @@ const SignInForm = () => {
         setLoading(false);
       }
     },
+    
     [dispatch, navigate],
   );
 
@@ -290,6 +292,7 @@ const SignInForm = () => {
             variant="contained"
             style={{ background: "#FF885B", marginBottom: "-0.625rem" }}
             loading={loading}
+          
           >
             <Box display="flex" alignItems="center" gap="0.3125rem">
               <Typography
