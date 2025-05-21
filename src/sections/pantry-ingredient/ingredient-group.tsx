@@ -6,9 +6,10 @@ import { fetchCategories, fetchIngredients, fetchUserPantry,putUserPantry } from
 
 interface Props {
   onCountChange?: (count: number) => void;  
+  onPantryUpdate?: () => void;
 }
 
-const IngredientGroup = ({ onCountChange }:Props) => {
+const IngredientGroup = ({ onCountChange,onPantryUpdate }:Props) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
@@ -64,6 +65,7 @@ const IngredientGroup = ({ onCountChange }:Props) => {
   const toggleIngredient = async (id: number) => {
     const next = new Set(selectedIds);
     if (next.has(id)) next.delete(id);
+    
     else next.add(id);
 
     setSelectedIds(next);
@@ -77,6 +79,7 @@ const IngredientGroup = ({ onCountChange }:Props) => {
     try {
       const token = localStorage.getItem("access_token")!;
       await putUserPantry(token, Array.from(next));
+      if (onPantryUpdate) onPantryUpdate();
     } catch (err) {
       console.error("Save error:", err);
      
