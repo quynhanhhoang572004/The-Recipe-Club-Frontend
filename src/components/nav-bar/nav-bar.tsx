@@ -75,6 +75,7 @@ const NavBar = () => {
         borderStyle: "none",
         outline: "none",
         boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.08)",
+        borderRadius: 0,
         zIndex: (theme) => theme.zIndex.drawer + 1,
       }}
     >
@@ -128,7 +129,7 @@ const NavBar = () => {
               <NavBarLink href="/home" isActive={pathname === "/home"}>
                 About
               </NavBarLink>
-              <NavBarLink href="/mypantry" isActive={pathname === "/mypantry"}>
+              <NavBarLink href="/pantry" isActive={pathname === "/pantry"}>
                 My pantry
               </NavBarLink>
             </Box>

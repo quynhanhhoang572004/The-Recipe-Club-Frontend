@@ -1,22 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { Box, CircularProgress, Typography } from '@mui/material';
-import { Category, Ingredient } from '@/types/pantry/ingredient';
-import PantryCategoryBlock from '@/components/pantry-category/pantry-category-block';
-import { fetchCategories, fetchIngredients, fetchUserPantry,putUserPantry } from '@/api/my-pantry.service';
+import { useCallback, useEffect, useState } from "react";
+import { Box, CircularProgress, Typography } from "@mui/material";
+import { Category, Ingredient } from "@/types/pantry/ingredient";
+import PantryCategoryBlock from "@/components/pantry-category/pantry-category-block";
+import {
+  fetchCategories,
+  fetchIngredients,
+  fetchUserPantry,
+  putUserPantry,
+} from "@/api/my-pantry.service";
 
 interface Props {
-  onCountChange?: (count: number) => void;  
+  onCountChange?: (count: number) => void;
+  onPantryUpdate?: () => void;
 }
 
-const IngredientGroup = ({ onCountChange }:Props) => {
+const IngredientGroup = ({ onCountChange, onPantryUpdate }: Props) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const [loading, setLoading] = useState(true);
-  
-  const reportCount = (ids: Set<number>) => {
-    if (onCountChange) onCountChange(ids.size);
-  };
+
+  const reportCount = useCallback(
+    (ids: Set<number>) => {
+      if (onCountChange) onCountChange(ids.size);
+    },
+    [onCountChange],
+  );
 
   useEffect(() => {
     const fetchPantry = async () => {
@@ -26,19 +35,18 @@ const IngredientGroup = ({ onCountChange }:Props) => {
           fetchIngredients(),
         ]);
 
-
-        const accessToken = localStorage.getItem('access_token');
+        const accessToken = localStorage.getItem("access_token");
         let userIngredientIds = new Set<number>();
 
         if (accessToken) {
-         try{
-          const userPantry = await fetchUserPantry(accessToken);
-          userIngredientIds = new Set(userPantry.map((i: Ingredient) => i.id));
-
-         }
-         catch(error){
-            console.error("k load dc", error)
-         }
+          try {
+            const userPantry = await fetchUserPantry(accessToken);
+            userIngredientIds = new Set(
+              userPantry.map((i: Ingredient) => i.id),
+            );
+          } catch (error) {
+            console.error("k load dc", error);
+          }
         }
 
         const mergedIngredients = ings.map((i: Ingredient) => ({
@@ -49,17 +57,17 @@ const IngredientGroup = ({ onCountChange }:Props) => {
 
         setCategories(cats);
         setIngredients(mergedIngredients);
-        setSelectedIds(userIngredientIds)
+        setSelectedIds(userIngredientIds);
         reportCount(userIngredientIds);
-      } catch {
-        
+      } catch (error) {
+        console.error("Error loading pantry:", error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchPantry();
-  }, []);
+  }, [reportCount]);
 
   const toggleIngredient = async (id: number) => {
     const next = new Set(selectedIds);
@@ -68,18 +76,16 @@ const IngredientGroup = ({ onCountChange }:Props) => {
 
     setSelectedIds(next);
     setIngredients((prev) =>
-      prev.map((i) =>
-        i.id === id ? { ...i, selected: next.has(id) } : i
-      )
+      prev.map((i) => (i.id === id ? { ...i, selected: next.has(id) } : i)),
     );
     reportCount(next);
 
     try {
       const token = localStorage.getItem("access_token")!;
       await putUserPantry(token, Array.from(next));
+      if (onPantryUpdate) onPantryUpdate();
     } catch (err) {
       console.error("Save error:", err);
-     
     }
   };
 
@@ -98,7 +104,7 @@ const IngredientGroup = ({ onCountChange }:Props) => {
             key={category.id}
             category={category.name}
             items={items}
-            selectedIds={selectedIds}       
+            selectedIds={selectedIds}
             onToggle={toggleIngredient}
           />
         );

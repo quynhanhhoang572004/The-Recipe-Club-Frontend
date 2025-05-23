@@ -12,7 +12,7 @@ const HeroSection: React.FC = () => {
       sx={{
         width: "100%",
         maxWidth: "93.75rem",
-        marginTop: "5.625rem",
+        marginTop: "4.5rem",
         paddingTop: "3.125rem",
         minHeight: { xs: "56.25rem", md: "56.25rem" },
         mx: "auto",
@@ -43,7 +43,8 @@ const HeroSection: React.FC = () => {
               flexDirection: "column",
               alignItems: "flex-start",
               mr: { xs: 0, md: "-2.875rem" },
-              fontFamily: "Montserrat, -apple-system, Roboto, Helvetica, sans-serif",
+              fontFamily:
+                "Montserrat, -apple-system, Roboto, Helvetica, sans-serif",
             }}
           >
             <Box>
@@ -83,7 +84,8 @@ const HeroSection: React.FC = () => {
               }}
             >
               From leftovers to gourmet meals
-              <br />—your next recipe is just a search away
+              <br />
+              —your next recipe is just a search away
             </Typography>
 
             <Box
