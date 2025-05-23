@@ -1,11 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import {
-  Box,
-  Typography,
-  Avatar,
-  IconButton,
-  Button,
-} from "@mui/material";
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import { Box, Typography, Avatar, IconButton, Button } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 
 interface TestimonialCardProps {
@@ -43,7 +37,11 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-        <Avatar src={avatar} alt={name} sx={{ width: "3.375rem", height: "3.375rem", mr: 2 }} />
+        <Avatar
+          src={avatar}
+          alt={name}
+          sx={{ width: "3.375rem", height: "3.375rem", mr: 2 }}
+        />
         <Box sx={{ display: "flex", alignItems: "center", gap: "0.875rem" }}>
           <Typography sx={{ fontWeight: 500 }}>{name}</Typography>
           <Typography sx={{ fontWeight: 400 }}>{date}</Typography>
@@ -111,12 +109,12 @@ const TestimonialSection: React.FC = () => {
     }
   };
 
-  const startAutoScroll = () => {
-    stopAutoScroll(); // Clear any existing interval
+  const startAutoScroll = useCallback(() => {
+    stopAutoScroll();
     intervalRef.current = setInterval(() => {
       scroll("right");
     }, 3000);
-  };
+  }, []);
 
   const stopAutoScroll = () => {
     if (intervalRef.current) {
@@ -141,7 +139,7 @@ const TestimonialSection: React.FC = () => {
         container.removeEventListener("mouseleave", startAutoScroll);
       }
     };
-  }, []);
+  }, [startAutoScroll]);
 
   return (
     <Box

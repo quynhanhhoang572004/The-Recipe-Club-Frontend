@@ -1,5 +1,5 @@
 import NavBar from "@/components/nav-bar/nav-bar";
-import { Box, Typography, Pagination, Button } from "@mui/material";
+import { Box, Typography, Pagination, Grid } from "@mui/material";
 import IngredientGroup from "@/sections/pantry-ingredient/ingredient-group";
 import SideBar from "@/components/side-bar/side-bar";
 import SearchBar from "@/components/inputs/search-bar";
@@ -13,6 +13,7 @@ import {
 } from "@/api/recipe.service";
 import RecipeCard from "@/components/recipe-card/recipe-card";
 import RecipeDetailCard from "@/components/recipe-detail/recipe-detail";
+import SeoMetaTags from "@/components/seo-meta-tags";
 
 const MyPantryPage = () => {
   const tags = [
@@ -62,7 +63,7 @@ const MyPantryPage = () => {
         const response = await getRecommendedRecipes();
         setRecipesCount(response.total);
       } catch (error) {
-        console.error("Error to get the total number of recipe");
+        console.error("Error to get the total number of recipe: ", error);
         setRecipesCount(0);
       }
     };
@@ -103,6 +104,7 @@ const MyPantryPage = () => {
         backgroundPosition: "center",
       }}
     >
+      <SeoMetaTags title="My Pantry" />
       <NavBar />
       <Box sx={{ marginTop: "4.5rem", display: "flex", flexDirection: "row" }}>
         <Box
@@ -143,7 +145,6 @@ const MyPantryPage = () => {
                 in your pantry
               </Typography>
             </Box>
-
             <Box
               sx={{
                 display: "flex",
@@ -157,7 +158,6 @@ const MyPantryPage = () => {
                 Width="20rem"
               />
             </Box>
-
             <IngredientGroup
               onCountChange={setPantryCount}
               onPantryUpdate={() => setPantryUpdated((prev) => !prev)}
@@ -171,7 +171,7 @@ const MyPantryPage = () => {
             bgcolor: "#FFFFF6",
             display: "flex",
             flexDirection: "column",
-            padding: "1rem 4rem 4rem 3rem",
+            padding: "1rem 4rem 1rem 4rem",
             alignItems: "center",
             height: "100%",
           }}
@@ -215,12 +215,12 @@ const MyPantryPage = () => {
           </Box>
 
           <Box sx={{ alignItems: "center" }}>
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 2 }}>
+            <Grid container spacing={3} marginTop={2}>
               {currentRecipes.map((recipe) => (
-                <Box
+                <Grid
+                  size={3}
                   key={recipe.id}
                   onClick={() => setSelectedRecipeId(recipe.id)}
-                  sx={{ cursor: "pointer" }}
                 >
                   <RecipeCard
                     name={recipe.title}
@@ -228,9 +228,9 @@ const MyPantryPage = () => {
                     image_url={recipe.image_url}
                     num_of_ingredient={recipe.matched_ingredients}
                   />
-                </Box>
+                </Grid>
               ))}
-            </Box>
+            </Grid>
 
             <Box sx={{ mt: 4, display: "flex", justifyContent: "center" }}>
               <Pagination
@@ -256,9 +256,7 @@ const MyPantryPage = () => {
                 <RecipeDetailCard
                   name={selectedRecipe.title}
                   image_url={selectedRecipe.image_url}
-                  num_of_ingredient={
-                    selectedRecipe.matched_ingredients
-                  }
+                  num_of_ingredient={selectedRecipe.matched_ingredients}
                   link_recipe={selectedRecipe.domain}
                   ingedient={selectedRecipe.ingredients}
                   nutrition_fact={Object.entries(
