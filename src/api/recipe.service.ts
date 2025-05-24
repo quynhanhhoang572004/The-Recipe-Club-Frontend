@@ -52,5 +52,52 @@ export const getRecipeById = async (
   } catch (error) {
     console.error(`Error fetching recipe ${recipeId}:`, error);
     return null;
+  }} 
+
+export const getRecommendRecipeGuest = async (): Promise<{
+  total: number;
+  recipes: Recipe[];
+}> => {
+  try {
+    const response = await axiosClient.get("/recipes/recommend/guest");
+    return {
+      total: response.data.total || 0,
+      recipes: Array.isArray(response.data.recipes)
+        ? response.data.recipes
+        : [],
+    };
+  } catch (error) {
+    console.error("Error fetching guest recommended recipes:", error);
+    return {
+      total: 0,
+      recipes: [],
+    };
   }
 };
+
+
+
+export const searchRecipes = async (
+  query: string
+): Promise<{ total: number; recipes: Recipe[] }> => {
+  try {
+    const response = await axiosClient.get("/recipes/search", {
+      params: { q: query },
+    });
+    return {
+      total: response.data.total || 0,
+      recipes: Array.isArray(response.data.recipes)
+        ? response.data.recipes
+        : [],
+    };
+  } catch (error) {
+    console.error("Error searching recipes:", error);
+    return {
+      total: 0,
+      recipes: [],
+    };
+  }
+};
+
+
+

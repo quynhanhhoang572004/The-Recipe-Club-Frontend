@@ -235,18 +235,19 @@ const MyPantryPage = () => {
             <Box sx={{ mt: 4, display: "flex", justifyContent: "center" }}>
               <Pagination
                 sx={{
-                  "& .Mui-selected": {
+                  "& .MuiPaginationItem-root.Mui-selected": {
                     backgroundColor: "#FF885B",
                     color: "#FFFFFF",
                     "&:hover": {
-                      backgroundColor: "#FF885B", 
+                      backgroundColor: "#FF885B",
+                      color: "#FFFFFF",
                     },
                   },
                   "& .MuiPaginationItem-root:hover": {
-                    backgroundColor: "rgba(255, 136, 91, 0.5)", 
+                    backgroundColor: "rgba(255, 136, 91, 0.5)",
                     color: "#FFFFFF",
                   },
-                }}                 
+                }}
                 count={totalPages}
                 page={currentPage}
                 onChange={(_, value) => setCurrentPage(value)}
