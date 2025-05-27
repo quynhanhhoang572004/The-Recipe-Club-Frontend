@@ -1,48 +1,46 @@
-import React, { useEffect, useState } from "react";
-import { Box, CircularProgress, Typography } from "@mui/material";
-import { getRecommendedRecipes } from "@/api/recipe.service";
+import React, { useState } from "react";
+import { Box, Typography } from "@mui/material";
 import Navbar from "@/components/nav-bar/nav-bar";
 import RatingForm from "@/components/rating-form/rating-form";
+import { useParams } from "react-router-dom";
 
 const RatingPage: React.FC = () => {
-  const [recipeId, setRecipeId] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { recipeId: urlRecipeId } = useParams<{ recipeId?: string }>();
 
-  useEffect(() => {
-    const fetchRecommendedRecipe = async () => {
-      try {
-        const data = await getRecommendedRecipes();
-        if (data.recipes.length > 0) {
-          const randomIndex = Math.floor(Math.random() * data.recipes.length);
-          setRecipeId(data.recipes[randomIndex].id);
-        }
-      } catch (error) {
-        console.error("Failed to fetch recommended recipes:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchRecommendedRecipe();
-  }, []);
-
-  if (!recipeId) {
+  if (!urlRecipeId) {
     return (
-      <Box sx={{ textAlign: "center", mt: 4 }}>
-        <Typography>No recommended recipes found.</Typography>
-      </Box>
+      <>
+        <Navbar />
+        <Box
+          sx={{
+            textAlign: "center",
+            mt: 7,
+            p: 4,
+            backgroundColor: "#FFFFF6",
+            minHeight: "calc(100vh - 8rem)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Typography variant="h5">
+            Please select a recipe to rate. No recipe ID was provided.
+          </Typography>
+        </Box>
+      </>
     );
   }
+
 
   return (
     <>
       <Navbar />
       <Box sx={{ mt: 7, backgroundColor: "#FFFFF6" }}>
-        <RatingForm recipeId={recipeId} />;
+        <RatingForm recipeId={urlRecipeId} />
       </Box>
     </>
-
-  )
+  );
 };
 
 export default RatingPage;

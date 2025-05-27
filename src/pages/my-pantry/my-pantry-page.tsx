@@ -8,6 +8,7 @@ import PantryTag from "@/components/pantry-tag/pantry-tag";
 import { useAppSelector } from "@/hooks/use-app-selector";
 import { useNavigate } from "react-router-dom";
 
+
 import {
   Recipe,
   getRecommendedRecipes,
@@ -266,6 +267,7 @@ const MyPantryPage = () => {
               <Box>
                 {selectedRecipe && (
                   <RecipeDetailCard
+                  id = {selectedRecipe.id}
                     name={selectedRecipe.title}
                     image_url={selectedRecipe.image_url}
                     num_of_ingredient={selectedRecipe.matched_ingredients}
