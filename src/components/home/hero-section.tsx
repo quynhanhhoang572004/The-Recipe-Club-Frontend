@@ -78,6 +78,7 @@ useEffect(() => {
             display: "block",
             fontSize: { xs: "2.5rem", md: "3.75rem" },
             fontWeight: 500,
+            fontFamily: "Montserrat, sans-serif",
             color: "#000",
           }}
         >
@@ -89,6 +90,7 @@ useEffect(() => {
             display: "block",
             fontSize: { xs: "2.5rem", md: "6.875rem" },
             fontWeight: 600,
+            fontFamily: "Montserrat, sans-serif",
             color: "#ff885b",
           }}
         >
@@ -101,6 +103,7 @@ useEffect(() => {
           color: "#000",
           fontSize: "1.5rem",
           fontWeight: 400,
+          fontFamily: "Montserrat, sans-serif",
           width: "29.125rem",
           maxWidth: "100%",
           mt: "0.125rem",
@@ -191,6 +194,7 @@ useEffect(() => {
             display: "block",
             fontSize: { xs: "2.5rem", md: "3.75rem" },
             fontWeight: 500,
+             fontFamily: "Montserrat, sans-serif",
             color: "#000",
           }}
         >
@@ -202,6 +206,7 @@ useEffect(() => {
             display: "block",
             fontSize: { xs: "2.5rem", md: "6.875rem" },
             fontWeight: 600,
+             fontFamily: "Montserrat, sans-serif",
             color: "#ff885b",
           }}
         >
@@ -227,6 +232,7 @@ useEffect(() => {
         sx={{
           display: "flex",
           gap: "1.5625rem",
+          
           mt: { xs: "2.5rem", md: "3.625rem" },
           fontSize: "1.25rem",
           fontWeight: 500,

@@ -298,6 +298,7 @@ const SignInForm = () => {
               <Typography
                 sx={{
                   fontWeight: 600,
+                  color:"#fffff6"
                 }}
               >
                 Sign in
@@ -331,7 +332,7 @@ const SignInForm = () => {
                 height={24}
                 alt="google-logo"
               />
-              <Typography sx={{ fontWeight: 600 }}>
+              <Typography sx={{ fontWeight: 600,  color:"#fffff6" }}>
                 Sign in with Google
               </Typography>
             </Box>
