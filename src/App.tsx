@@ -5,6 +5,7 @@ import SignUpPage from "@/pages/auth/sign-up-page";
 import MyPantryPage from "@/pages/my-pantry/my-pantry-page";
 import Home from "@/pages/homepage/home";
 import Profile from "@/pages/auth/profile";
+import RatingPage from "./pages/rating-page/rating-page";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         
         </Route>
           <Route path="/profile" element={<Profile />} />
+          <Route path="/rating" element={<RatingPage />} />
       </Routes>
     </BrowserRouter>
   );
