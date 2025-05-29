@@ -5,8 +5,7 @@ import { grey } from "@/theme/color";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-
-import { signIn, signOut } from "@/stores/user-slice";
+import { signOut } from "@/stores/user-slice";
 
 import {
   AppBar,
@@ -25,7 +24,7 @@ import { CircleUserRound, Settings } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface NavBarProps {
-  onSearch?: (query: string) => void; 
+  onSearch?: (query: string) => void;
 }
 
 const NavBarLink = styled(Link)(({ isActive }: { isActive?: boolean }) => ({
@@ -95,7 +94,6 @@ const NavBar = ({ onSearch }: NavBarProps) => {
     handleClose();
     navigate("/signin");
   };
-  
 
   return (
     <AppBar
@@ -178,12 +176,11 @@ const NavBar = ({ onSearch }: NavBarProps) => {
             gap: 2,
           }}
         >
-  <SearchBar
-  PlaceHolder="What’s in your fridge? Start typing..."
-  Width="24rem"
-  onSearch={onSearch}
-/>
-
+          <SearchBar
+            PlaceHolder="What’s in your fridge? Start typing..."
+            Width="24rem"
+            onSearch={onSearch}
+          />
 
           {isAuthenticated ? (
             <>

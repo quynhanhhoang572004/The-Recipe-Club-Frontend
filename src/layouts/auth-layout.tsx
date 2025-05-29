@@ -1,4 +1,3 @@
-import SeoMetaTags from "@/components/seo-meta-tags";
 import { useAppSelector } from "@/hooks/use-app-selector";
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -9,14 +8,13 @@ const AuthLayout = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(-1);
+      navigate("/");
     }
-  }, [isAuthenticated, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
 
   return (
     <>
-      <SeoMetaTags title="Auth" />
-      {/* {children} */}
       <Outlet />
     </>
   );

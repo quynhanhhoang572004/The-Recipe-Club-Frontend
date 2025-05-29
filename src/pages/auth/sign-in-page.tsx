@@ -1,3 +1,4 @@
+import SeoMetaTags from "@/components/seo-meta-tags";
 import SignInForm from "@/sections/auth/sign-in-form";
 import { Box, Card } from "@mui/material";
 
@@ -16,6 +17,7 @@ const signInPage = () => {
         padding: "5rem",
       }}
     >
+      <SeoMetaTags title="Sign in" />
       <Card
         elevation={12}
         sx={{

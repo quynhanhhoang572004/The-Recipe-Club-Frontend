@@ -17,6 +17,7 @@ const Home = () => {
   const imgRef = useRef(null);
 
   useEffect(() => {
+    if (!isAuthenticated) return;
     const fetchRecipes = async () => {
       try {
         const response = await getRecommendedRecipes();
@@ -47,15 +48,14 @@ const Home = () => {
     if (imgRef.current) observer.observe(imgRef.current);
 
     return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       if (imgRef.current) observer.unobserve(imgRef.current);
     };
   }, []);
 
- 
-const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
-
 
   useEffect(() => {
     if (searchQuery) {
@@ -70,39 +70,39 @@ const [searchQuery, setSearchQuery] = useState("");
     <Box sx={{ backgroundColor: "#FFFFF6", position: "relative" }}>
       <SeoMetaTags title="Home" />
       <NavBar onSearch={setSearchQuery} />
-     {searchQuery === "" ? (
-  <HeroSection />
-) : (
-  <Box sx={{ py: 8, px: 2, textAlign: "center" }}>
-    <Typography
-      sx={{
-        fontSize: { xs: "1.5rem", md: "2rem" },
-        fontWeight: 700,
-        color: "#FF885B",
-        mb: 4,
-      }}
-    >
-      Search Results for "{searchQuery}"
-    </Typography>
-
-    <Grid container spacing={2} justifyContent="center">
-      {filteredRecipes.length > 0 ? (
-        filteredRecipes.map((recipe) => (
-          <Grid size={2.3}>
-            <RecipeCard
-              name={recipe.title}
-              link_recipe={recipe.domain}
-              image_url={recipe.image_url}
-              num_of_ingredient={recipe.matched_ingredients}
-            />
-          </Grid>
-        ))
+      {searchQuery === "" ? (
+        <HeroSection />
       ) : (
-        <Typography>No recipes found.</Typography>
+        <Box sx={{ py: 8, px: 2, textAlign: "center" }}>
+          <Typography
+            sx={{
+              fontSize: { xs: "1.5rem", md: "2rem" },
+              fontWeight: 700,
+              color: "#FF885B",
+              mb: 4,
+            }}
+          >
+            Search Results for "{searchQuery}"
+          </Typography>
+
+          <Grid container spacing={2} justifyContent="center">
+            {filteredRecipes.length > 0 ? (
+              filteredRecipes.map((recipe) => (
+                <Grid size={2.3}>
+                  <RecipeCard
+                    name={recipe.title}
+                    link_recipe={recipe.domain}
+                    image_url={recipe.image_url}
+                    num_of_ingredient={recipe.matched_ingredients}
+                  />
+                </Grid>
+              ))
+            ) : (
+              <Typography>No recipes found.</Typography>
+            )}
+          </Grid>
+        </Box>
       )}
-    </Grid>
-  </Box>
-)}
 
       {isAuthenticated ? (
         <Box
@@ -302,37 +302,6 @@ const [searchQuery, setSearchQuery] = useState("");
                 Let's Start
               </Typography>
             </Box>
-
-            {/* <Box
-          ref={imgRef}
-          component="img"
-          src="public\images\05dbafde-b769-43ad-909e-a3ab5f6dd7ea.png"
-          alt="Kitchen creativity"
-          sx={{
-            aspectRatio: "1",
-            objectFit: "contain",
-            objectPosition: "left",
-            width: "100%",
-            maxWidth: "38rem",
-            marginLeft:"2rem",
-            zIndex: 1,
-            position: "absolute",
-            left:3,
-            opacity: 0,
-            transform: "rotate(-5deg)",
-            animation: "fadeInRotate 3s ease-out forwards",
-            "@keyframes fadeInRotate": {
-              from: {
-                opacity: 0,
-                transform: "rotate(-90deg)",
-              },
-              to: {
-                opacity: 1,
-                transform: "rotate(0deg)",
-              },
-            },
-          }}
-        /> */}
             <Button
               variant="contained"
               onClick={() => navigate("/pantry")}

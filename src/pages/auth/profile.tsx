@@ -10,28 +10,20 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/nav-bar/nav-bar";
 
 import { useAppSelector } from "@/hooks/use-app-selector";
-import { getMe } from "@/api/auth.service";
-import { useState, useEffect } from "react";
+import { useAppDispatch } from "@/hooks/use-app-dispatch";
+import { removeToken } from "@/utils/token";
+import { signOut } from "@/stores/user-slice";
 
 const UserProfile = () => {
   const navigate = useNavigate();
-  const [user, setUsername] = useState("");
-  const [image_url, setImageUrl] = useState("");
-  const { isAuthenticated } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const fetchMe = async () => {
-      try {
-        const response = await getMe();
-        setUsername(response.data.email);
-        setImageUrl(response.data.profile.avatar_url);
-      } catch (error) {
-        console.error("Failed to fetch user:", error);
-      }
-    };
-
-    fetchMe();
-  }, [isAuthenticated]);
+  const handleSignOut = () => {
+    removeToken("access_token");
+    dispatch(signOut());
+    navigate("/signin");
+  };
 
   return (
     <Box
@@ -130,8 +122,6 @@ const UserProfile = () => {
             bgcolor: "#ff885b",
           }}
         />
-
-        {/* Hình ảnh */}
         <Box
           component="img"
           src="https://cdn.builder.io/api/v1/image/assets/TEMP/ad4e863fa4d509f70a2f26500672e61ba7fe521c?placeholderIfAbsent=true&apiKey=54645ae1b26d40969fecd1dde095fca5"
@@ -201,8 +191,8 @@ const UserProfile = () => {
             height: 85,
             marginBottom: 2,
           }}
-          alt={user}
-          src={image_url}
+          alt={user?.profile.full_name || "User Avatar"}
+          src={user?.profile.avatar_url || ""}
         />
 
         <Box
@@ -226,12 +216,12 @@ const UserProfile = () => {
               fontSize: "2rem",
             }}
           >
-            {user}
+            {user?.email}
           </Typography>
         </Box>
 
         <Button
-          onClick={() => navigate("/signin")}
+          onClick={handleSignOut}
           variant="contained"
           sx={{
             bgcolor: "#ff885b",
@@ -250,7 +240,6 @@ const UserProfile = () => {
         >
           Sign Out
         </Button>
-
         <Link
           component="button"
           onClick={() => navigate("/change-password")}
@@ -264,7 +253,6 @@ const UserProfile = () => {
         >
           Change Password
         </Link>
-
         <Link
           component="button"
           onClick={() => navigate("/delete-account")}

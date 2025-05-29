@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Eye, EyeOff, Lock, User } from "lucide-react";
-import { useState, useRef, useLayoutEffect, useCallback } from "react";
+import { useState, useRef, useLayoutEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -19,6 +19,10 @@ import {
   SignUpProps,
 } from "@/types/auth/signup";
 import toast from "react-hot-toast";
+import { signUpApi } from "@/api/auth.service";
+import { setToken } from "@/utils/token";
+import { useAppDispatch } from "@/hooks/use-app-dispatch";
+import { signIn } from "@/stores/user-slice";
 
 const SignUpForm = () => {
   const [focusInput, setFocusInput] = useState<string | null>("firstName");
@@ -33,6 +37,8 @@ const SignUpForm = () => {
     resolver: zodResolver(signUpSchema),
     defaultValues: initialSignUpValues,
   });
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleClickOutside = (event: MouseEvent) => {
     if (formRef.current && !formRef.current.contains(event.target as Node)) {
@@ -40,20 +46,15 @@ const SignUpForm = () => {
     }
   };
 
-  const onSubmit: SubmitHandler<SignUpProps> = useCallback(async (data) => {
+  const onSubmit: SubmitHandler<SignUpProps> = async (data) => {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { confirmPassword, ...rest } = data;
       setLoading(true);
-      toast.promise(
-        new Promise((resolve) => setTimeout(resolve, 3000)).then(() => {
-          console.log(data);
-          return true;
-        }),
-        {
-          loading: "Signing up...",
-          success: "Signed up successfully",
-          error: "Failed to sign up",
-        },
-      );
+      const { access_token, user } = await signUpApi(rest);
+      dispatch(signIn(user));
+      setToken("access_token", access_token);
+      navigate("/");
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);
@@ -62,7 +63,7 @@ const SignUpForm = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
   useLayoutEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -502,7 +503,9 @@ const SignUpForm = () => {
               }}
             >
               <Box display="flex" alignItems="center" gap={0.5}>
-                <Typography sx={{ fontWeight: 600,  color:"#fffff6" }}>Sign up</Typography>
+                <Typography sx={{ fontWeight: 600, color: "#fffff6" }}>
+                  Sign up
+                </Typography>
               </Box>
             </Button>
             <Typography
@@ -534,7 +537,7 @@ const SignUpForm = () => {
                   height={24}
                   alt="google-logo"
                 />
-                <Typography sx={{ fontWeight: 600,  color:"#fffff6" }}>
+                <Typography sx={{ fontWeight: 600, color: "#fffff6" }}>
                   Sign up with Google
                 </Typography>
               </Box>
