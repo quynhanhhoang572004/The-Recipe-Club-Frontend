@@ -502,7 +502,7 @@ const SignUpForm = () => {
               }}
             >
               <Box display="flex" alignItems="center" gap={0.5}>
-                <Typography sx={{ fontWeight: 600 }}>Sign up</Typography>
+                <Typography sx={{ fontWeight: 600,  color:"#fffff6" }}>Sign up</Typography>
               </Box>
             </Button>
             <Typography
@@ -534,7 +534,7 @@ const SignUpForm = () => {
                   height={24}
                   alt="google-logo"
                 />
-                <Typography sx={{ fontWeight: 600 }}>
+                <Typography sx={{ fontWeight: 600,  color:"#fffff6" }}>
                   Sign up with Google
                 </Typography>
               </Box>

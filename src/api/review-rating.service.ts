@@ -56,4 +56,11 @@ export const uploadMultipleImages = async (images: File[]): Promise<{ image_urls
   return response.data;
 };
 
+export const getRecipeRatings = async (recipe_id: string): Promise<any> => {
+  if (!recipe_id) throw new Error("recipe_id is required");
+
+  const response = await axiosClient.get(`/users/ratings/recipe/${recipe_id}`);
+  return response.data;
+};
+
 

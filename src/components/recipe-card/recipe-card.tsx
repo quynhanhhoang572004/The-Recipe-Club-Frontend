@@ -22,7 +22,7 @@ const RecipeCard = ({
       sx={{
         cursor: "pointer",
         display: "flex",
-        height: "100%",
+      minHeight: 320,
         flexDirection: "column",
         gap: 2,
         border: "1px solid #d4d4d4",

@@ -13,8 +13,11 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { MessageCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
+  id: string;
   name: string;
   image_url: string;
   num_of_ingredient: number;
@@ -25,6 +28,7 @@ interface Props {
 }
 
 const RecipeDetail = ({
+  id,
   name,
   image_url,
   num_of_ingredient,
@@ -33,9 +37,19 @@ const RecipeDetail = ({
   nutrition_fact,
   onClose,
 }: Props) => {
+  const navigate = useNavigate();
+
   const formattedLink = link_recipe.startsWith("http")
     ? link_recipe
     : `https://${link_recipe}`;
+
+
+  const handleReviewClick = () => {
+
+  
+    
+    navigate(`/rating/${id || ""}`);
+  };
 
   return (
     <Box
@@ -72,6 +86,7 @@ const RecipeDetail = ({
       >
         <CloseIcon />
       </IconButton>
+
       <Card
         sx={{
           bgcolor: "#FFFFF6",
@@ -81,7 +96,17 @@ const RecipeDetail = ({
         <CardMedia component="img" height="200" image={image_url} alt={name} />
 
         <CardContent>
-          <Typography sx={{ fontWeight: 700, fontSize: 25 }}>{name}</Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Typography sx={{ fontWeight: 700, fontSize: 25 }}>
+              {name}
+            </Typography>
+            <Box
+              sx={{ marginLeft: "8px", cursor: "pointer" }}
+              onClick={handleReviewClick}
+            >
+              <MessageCircle size={24} color="#FF885B" />
+            </Box>
+          </Box>
           <Typography variant="body2" color="text.secondary">
             you have{" "}
             <span
@@ -142,8 +167,15 @@ const RecipeDetail = ({
               justifyContent: "center",
             }}
           >
-            <Box>
-              <Typography variant="subtitle1" sx={{ lineHeight: 1.0 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Typography variant="subtitle1" sx={{ lineHeight: 1.5 }}>
                 View Full Recipe
               </Typography>
               <Typography

@@ -1,17 +1,37 @@
-import React from "react";
 import {
+  Avatar,
   Box,
   Button,
   Container,
   Link,
-  TextField,
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/nav-bar/nav-bar";
 
+import { useAppSelector } from "@/hooks/use-app-selector";
+import { getMe } from "@/api/auth.service";
+import { useState, useEffect } from "react";
+
 const UserProfile = () => {
   const navigate = useNavigate();
+  const [user, setUsername] = useState("");
+  const [image_url, setImageUrl] = useState("");
+  const { isAuthenticated } = useAppSelector((state) => state.user);
+
+  useEffect(() => {
+    const fetchMe = async () => {
+      try {
+        const response = await getMe();
+        setUsername(response.data.email);
+        setImageUrl(response.data.profile.avatar_url);
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+      }
+    };
+
+    fetchMe();
+  }, [isAuthenticated]);
 
   return (
     <Box
@@ -33,7 +53,6 @@ const UserProfile = () => {
           position: "fixed",
         }}
       >
-        {/* Các hình nền trang trí */}
         <Box
           sx={{
             position: "fixed",
@@ -176,39 +195,47 @@ const UserProfile = () => {
         >
           User profile
         </Typography>
-
-        <TextField
-          fullWidth
-          variant="outlined"
-          type="email"
-          InputProps={{
-            sx: {
-              fontSize: "1.1em",
-              textAlign: "center",
-              fontFamily: "Roboto, sans-serif",
-            },
-          }}
+        <Avatar
           sx={{
-            Width: "28vw",
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": {
-                borderColor: "#ff885b",
-              },
-              "&:hover fieldset": {
-                borderColor: "#ff885b",
-              },
-              "&.Mui-focused fieldset": {
-                borderColor: "#ff885b",
-              },
-            },
+            width: 85,
+            height: 85,
+            marginBottom: 2,
           }}
+          alt={user}
+          src={image_url}
         />
+
+        <Box
+          sx={{
+            bgcolor: "#FFFFF6",
+            border: "2px solid #FF885B",
+            width: "35rem",
+            height: "4rem",
+            borderRadius: "1rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+            alignContent: "center",
+            justifyItems: "center",
+          }}
+        >
+          <Typography
+            sx={{
+              color: "#FF885B",
+              fontSize: "2rem",
+            }}
+          >
+            {user}
+          </Typography>
+        </Box>
 
         <Button
           onClick={() => navigate("/signin")}
           variant="contained"
           sx={{
             bgcolor: "#ff885b",
+            color: "#FFFFF6",
             borderRadius: "0.8vw",
             width: "20vw",
             height: "6.5vh",

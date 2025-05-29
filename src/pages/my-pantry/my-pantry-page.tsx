@@ -1,10 +1,13 @@
 import NavBar from "@/components/nav-bar/nav-bar";
-import { Box, Typography, Pagination, Grid } from "@mui/material";
+import { Box, Typography, Pagination, Grid, Button } from "@mui/material";
 import IngredientGroup from "@/sections/pantry-ingredient/ingredient-group";
 import SideBar from "@/components/side-bar/side-bar";
 import SearchBar from "@/components/inputs/search-bar";
 import { useEffect, useState } from "react";
 import PantryTag from "@/components/pantry-tag/pantry-tag";
+import { useAppSelector } from "@/hooks/use-app-selector";
+import { useNavigate } from "react-router-dom";
+
 import {
   Recipe,
   getRecommendedRecipes,
@@ -30,6 +33,7 @@ const MyPantryPage = () => {
   ];
 
   const [pantryCount, setPantryCount] = useState(0);
+  const { isAuthenticated } = useAppSelector((state) => state.user);
   const [recipeCount, setRecipesCount] = useState(0);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -38,6 +42,10 @@ const MyPantryPage = () => {
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeDetail | null>(
     null,
   );
+  const [ingredientSearch, setIngredientSearch] = useState("");
+
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
   const recipesPerPage = 20;
@@ -91,8 +99,14 @@ const MyPantryPage = () => {
 
   const indexOfLastRecipe = currentPage * recipesPerPage;
   const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
-  const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
-  const totalPages = Math.ceil(recipes.length / recipesPerPage);
+  const filteredRecipes = recipes.filter((recipe) =>
+    recipe.title.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+  const currentRecipes = filteredRecipes.slice(
+    indexOfFirstRecipe,
+    indexOfLastRecipe,
+  );
+  const totalPages = Math.ceil(filteredRecipes.length / recipesPerPage);
 
   return (
     <Box
@@ -106,174 +120,256 @@ const MyPantryPage = () => {
     >
       <SeoMetaTags title="My Pantry" />
       <NavBar />
-      <Box sx={{ marginTop: "4.5rem", display: "flex", flexDirection: "row" }}>
+      {isAuthenticated ? (
         <Box
-          sx={{
-            width: "25rem",
-            flexShrink: 0,
-            position: "sticky",
-            top: "4.5rem",
-            alignSelf: "flex-start",
-          }}
+          sx={{ marginTop: "4.5rem", display: "flex", flexDirection: "row" }}
         >
-          <SideBar>
-            <Box sx={{ textAlign: "center", justifyContent: "center" }}>
-              <Typography
-                sx={{
-                  color: "#FF885B",
-                  fontSize: 30,
-                  marginTop: 2,
-                  marginBottom: 1,
-                  fontWeight: 600,
-                }}
-              >
-                My Pantry
-              </Typography>
-
-              <Typography sx={{ fontSize: 14, marginBottom: 2 }}>
-                You have
-                <span
-                  style={{
-                    fontSize: "1.3rem",
+          <Box
+            sx={{
+              width: "25rem",
+              flexShrink: 0,
+              position: "sticky",
+              top: "4.5rem",
+              alignSelf: "flex-start",
+            }}
+          >
+            <SideBar>
+              <Box sx={{ textAlign: "center", justifyContent: "center" }}>
+                <Typography
+                  sx={{
                     color: "#FF885B",
-                    fontWeight: 500,
+                    fontSize: 30,
+                    marginTop: 2,
+                    marginBottom: 1,
+                    fontWeight: 600,
                   }}
                 >
-                  {" "}
-                  {pantryCount} {pantryCount === 1 ? "item" : "items"}
-                </span>{" "}
-                in your pantry
-              </Typography>
-            </Box>
-            <Box
+                  My Pantry
+                </Typography>
+
+                <Typography sx={{ fontSize: 14, marginBottom: 2 }}>
+                  You have
+                  <span
+                    style={{
+                      fontSize: "1.3rem",
+                      color: "#FF885B",
+                      fontWeight: 500,
+                    }}
+                  >
+                    {" "}
+                    {pantryCount} {pantryCount === 1 ? "item" : "items"}
+                  </span>{" "}
+                  in your pantry
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginBottom: "1.5rem",
+                }}
+              >
+                <SearchBar
+                  PlaceHolder="add/remove/paste ingredient"
+                  Width="20rem"
+                  onSearch={(query) => setIngredientSearch(query.trim())}
+                />
+              </Box>
+              <IngredientGroup
+                onCountChange={setPantryCount}
+                onPantryUpdate={() => setPantryUpdated((prev) => !prev)}
+                searchTerm={ingredientSearch}
+              />
+            </SideBar>
+          </Box>
+
+          <Box
+            sx={{
+              flexGrow: 1,
+              bgcolor: "#FFFFF6",
+              display: "flex",
+              flexDirection: "column",
+              padding: "1rem 4rem 1rem 4rem",
+              alignItems: "center",
+              height: "100%",
+            }}
+          >
+            <Typography
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginBottom: "1.5rem",
+                color: "#FF885B",
+                fontSize: 30,
+                fontWeight: 600,
+                textAlign: "center",
               }}
             >
-              <SearchBar
-                PlaceHolder="add/remove/paste ingredient"
-                Width="20rem"
-              />
-            </Box>
-            <IngredientGroup
-              onCountChange={setPantryCount}
-              onPantryUpdate={() => setPantryUpdated((prev) => !prev)}
-            />
-          </SideBar>
-        </Box>
+              Suggest Ingredient
+            </Typography>
 
+            <Typography sx={{ marginBottom: "1.3rem" }}>
+              You have{" "}
+              <span
+                style={{
+                  color: "#FF885B",
+                  fontSize: "1.3rem",
+                  fontWeight: 500,
+                }}
+              >
+                {recipeCount}
+              </span>{" "}
+              Ingredient
+            </Typography>
+
+            <SearchBar
+              PlaceHolder="Find"
+              Width="50rem"
+              onSearch={(query) => {
+                setSearchQuery(query.trim());
+                setCurrentPage(1);
+              }}
+            />
+
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 2 }}>
+              {tags.map((tag) => (
+                <PantryTag
+                  key={tag}
+                  label={tag}
+                  selected={selectedTags.includes(tag)}
+                  onClick={() => handleToggleTag(tag)}
+                />
+              ))}
+            </Box>
+
+            <Box sx={{ alignItems: "center" }}>
+              <Grid container spacing={3} marginTop={2}>
+                {currentRecipes.map((recipe) => (
+                  <Grid
+                    size={3}
+                    key={recipe.id}
+                    onClick={() => setSelectedRecipeId(recipe.id)}
+                  >
+                    <RecipeCard
+                      name={recipe.title}
+                      link_recipe={recipe.domain}
+                      image_url={recipe.image_url}
+                      num_of_ingredient={recipe.matched_ingredients}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+
+              <Box sx={{ mt: 4, display: "flex", justifyContent: "center" }}>
+                <Pagination
+                  sx={{
+                    "& .MuiPaginationItem-root.Mui-selected": {
+                      backgroundColor: "#FF885B",
+                      color: "#FFFFFF",
+                      "&:hover": {
+                        backgroundColor: "#FF885B",
+                        color: "#FFFFFF",
+                      },
+                    },
+                    "& .MuiPaginationItem-root:hover": {
+                      backgroundColor: "rgba(255, 136, 91, 0.5)",
+                      color: "#FFFFFF",
+                    },
+                  }}
+                  count={totalPages}
+                  page={currentPage}
+                  onChange={(_, value) => setCurrentPage(value)}
+                  color="primary"
+                  shape="rounded"
+                />
+              </Box>
+              <Box>
+                {selectedRecipe && (
+                  <RecipeDetailCard
+                    id={selectedRecipe.id}
+                    name={selectedRecipe.title}
+                    image_url={selectedRecipe.image_url}
+                    num_of_ingredient={selectedRecipe.matched_ingredients}
+                    link_recipe={selectedRecipe.domain}
+                    ingedient={selectedRecipe.ingredients}
+                    nutrition_fact={Object.entries(
+                      selectedRecipe.nutrition_facts,
+                    ).map(
+                      ([key, value]) => `${key.replace(/_/g, " ")}: ${value}`,
+                    )}
+                    onClose={() => {
+                      setSelectedRecipeId(null);
+                      setSelectedRecipe(null);
+                    }}
+                  />
+                )}
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      ) : (
         <Box
           sx={{
-            flexGrow: 1,
-            bgcolor: "#FFFFF6",
+            minHeight: "100vh",
+            bgcolor: "#fffff6",
             display: "flex",
             flexDirection: "column",
-            padding: "1rem 4rem 1rem 4rem",
+            justifyContent: "center",
             alignItems: "center",
-            height: "100%",
+            backgroundImage: `url(images/pantrynologin.png)`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            position: "relative",
+            padding: "5rem",
           }}
         >
           <Typography
+            component="div"
             sx={{
+              fontSize: { xs: "1rem", md: "2rem" },
+              fontWeight: 700,
+              fontFamily: "Montserrat, sans-serif",
               color: "#FF885B",
-              fontSize: 30,
-              fontWeight: 600,
-              textAlign: "center",
+              mt: "0.25rem",
+              WebkitFlexWrap: "wrap",
+              animation: "floatUpDown 1s ease-in-out infinite",
+              opacity: 1,
+              "@keyframes floatUpDown": {
+                "0%": {
+                  transform: "translateY(0px)",
+                },
+                "50%": {
+                  transform: "translateY(-10px)",
+                },
+                "100%": {
+                  transform: "translateY(0px)",
+                },
+              },
             }}
           >
-            Suggest Ingredient
+            Join us to cook up your custom recipe! 🥗
           </Typography>
-
-          <Typography sx={{ marginBottom: "1.3rem" }}>
-            You have{" "}
-            <span
-              style={{
-                color: "#FF885B",
-                fontSize: "1.3rem",
-                fontWeight: 500,
-              }}
-            >
-              {recipeCount}
-            </span>{" "}
-            Ingredient
-          </Typography>
-
-          <SearchBar PlaceHolder="Find" Width="50rem" />
-
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 2 }}>
-            {tags.map((tag) => (
-              <PantryTag
-                key={tag}
-                label={tag}
-                selected={selectedTags.includes(tag)}
-                onClick={() => handleToggleTag(tag)}
-              />
-            ))}
-          </Box>
-
-          <Box sx={{ alignItems: "center" }}>
-            <Grid container spacing={3} marginTop={2}>
-              {currentRecipes.map((recipe) => (
-                <Grid
-                  size={3}
-                  key={recipe.id}
-                  onClick={() => setSelectedRecipeId(recipe.id)}
-                >
-                  <RecipeCard
-                    name={recipe.title}
-                    link_recipe={recipe.domain}
-                    image_url={recipe.image_url}
-                    num_of_ingredient={recipe.matched_ingredients}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-
-            <Box sx={{ mt: 4, display: "flex", justifyContent: "center" }}>
-              <Pagination
-                sx={{
-                  "& .Mui-selected": {
-                    backgroundColor: "#FF885B",
-                    color: "#FFFFFF",
-                  },
-                  "& .MuiPaginationItem-root:hover": {
-                    backgroundColor: "#FF885B",
-                    color: "#FFFFFF",
-                  },
-                }}
-                count={totalPages}
-                page={currentPage}
-                onChange={(_, value) => setCurrentPage(value)}
-                color="primary"
-                shape="rounded"
-              />
-            </Box>
-            <Box>
-              {selectedRecipe && (
-                <RecipeDetailCard
-                  name={selectedRecipe.title}
-                  image_url={selectedRecipe.image_url}
-                  num_of_ingredient={selectedRecipe.matched_ingredients}
-                  link_recipe={selectedRecipe.domain}
-                  ingedient={selectedRecipe.ingredients}
-                  nutrition_fact={Object.entries(
-                    selectedRecipe.nutrition_facts,
-                  ).map(
-                    ([key, value]) => `${key.replace(/_/g, " ")}: ${value}`,
-                  )}
-                  onClose={() => {
-                    setSelectedRecipeId(null);
-                    setSelectedRecipe(null);
-                  }}
-                />
-              )}
-            </Box>
-          </Box>
+          <Button
+            variant="contained"
+            onClick={() => navigate("/signup")}
+            sx={{
+              backgroundColor: "#FF885B",
+              color: "#fff",
+              px: 4,
+              py: 1.5,
+              borderRadius: "0.5rem",
+              fontSize: "1rem",
+              textTransform: "none",
+              boxShadow: "0 0.25rem 0.5rem rgba(0,0,0,0.25)",
+              "&:hover": {
+                backgroundColor: "#e6764f",
+              },
+              mb: 6,
+              marginTop: "1rem",
+            }}
+          >
+            Get Started
+          </Button>
         </Box>
-      </Box>
+      )}
     </Box>
   );
 };

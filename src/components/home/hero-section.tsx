@@ -1,10 +1,34 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "@/hooks/use-app-selector";
+import {getMe} from '@/api/auth.service'
+
 
 const HeroSection: React.FC = () => {
   const navigate = useNavigate();
+  const [user, setUsername] = useState("");
+  const { isAuthenticated } = useAppSelector((state) => state.user);
+
+useEffect(() => {
+  if (!isAuthenticated) {
+    setUsername(""); 
+    return;
+  }
+
+  const fetchMe = async () => {
+    try {
+      const response = await getMe();
+      setUsername(response.data.username);
+    } catch (error) {
+      console.error("Failed to fetch user:", error);
+    }
+  };
+
+  fetchMe();
+}, [isAuthenticated]);
+
 
   return (
     <Box
@@ -28,119 +52,217 @@ const HeroSection: React.FC = () => {
           width: "100%",
         }}
       >
-        <Box
+       {!isAuthenticated ? (
+  <Box
+    sx={{
+      display: "flex",
+      flexDirection: "column",
+      width: { xs: "100%", md: "50%" },
+      mt: { xs: "2.5rem", md: "5.625rem" },
+    }}
+  >
+    <Box
+      sx={{
+        zIndex: 10,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        mr: { xs: 0, md: "-2.875rem" },
+        fontFamily: "Montserrat, -apple-system, Roboto, Helvetica, sans-serif",
+      }}
+    >
+      <Box>
+        <Typography
+          component="span"
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: { xs: "100%", md: "50%" },
-            mt: { xs: "2.5rem", md: "5.625rem" },
+            display: "block",
+            fontSize: { xs: "2.5rem", md: "3.75rem" },
+            fontWeight: 500,
+            fontFamily: "Montserrat, sans-serif",
+            color: "#000",
           }}
         >
-          <Box
-            sx={{
-              zIndex: 10,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
-              mr: { xs: 0, md: "-2.875rem" },
-              fontFamily:
-                "Montserrat, -apple-system, Roboto, Helvetica, sans-serif",
-            }}
-          >
-            <Box>
-              <Typography
-                component="span"
-                sx={{
-                  display: "block",
-                  fontSize: { xs: "2.5rem", md: "3.75rem" },
-                  fontWeight: 500,
-                  color: "#000",
-                }}
-              >
-                Unlock Your Pantry's
-              </Typography>
-              <Typography
-                component="span"
-                sx={{
-                  display: "block",
-                  fontSize: { xs: "2.5rem", md: "6.875rem" },
-                  fontWeight: 600,
-                  color: "#ff885b",
-                }}
-              >
-                Potential!
-              </Typography>
-            </Box>
+          Unlock Your Pantry's
+        </Typography>
+        <Typography
+          component="span"
+          sx={{
+            display: "block",
+            fontSize: { xs: "2.5rem", md: "6.875rem" },
+            fontWeight: 600,
+            fontFamily: "Montserrat, sans-serif",
+            color: "#ff885b",
+          }}
+        >
+          Potential!
+        </Typography>
+      </Box>
 
-            <Typography
-              sx={{
-                color: "#000",
-                fontSize: "1.5rem",
-                fontWeight: 400,
-                width: "29.125rem",
-                maxWidth: "100%",
-                mt: "0.125rem",
-                ml: "0.6875rem",
-              }}
-            >
-              From leftovers to gourmet meals
-              <br />
-              —your next recipe is just a search away
-            </Typography>
+      <Typography
+        sx={{
+          color: "#000",
+          fontSize: "1.5rem",
+          fontWeight: 400,
+          fontFamily: "Montserrat, sans-serif",
+          width: "29.125rem",
+          maxWidth: "100%",
+          mt: "0.125rem",
+          ml: "0.6875rem",
+        }}
+      >
+        From leftovers to gourmet meals
+        <br />
+        —your next recipe is just a search away
+      </Typography>
 
-            <Box
-              sx={{
-                display: "flex",
-                gap: "1.5625rem",
-                mt: { xs: "2.5rem", md: "3.625rem" },
-                fontSize: "1.25rem",
-                fontWeight: 500,
-              }}
-            >
-              <Button
-                variant="contained"
-                onClick={() => navigate("/pantry")}
-                sx={{
-                  minHeight: "2.5625rem",
-                  backgroundColor: "#FF885B",
-                  color: "#fff",
-                  borderRadius: "0.5rem",
-                  fontSize: "1rem",
-                  letterSpacing: "0.025rem",
-                  textTransform: "none",
-                  padding: "0.5625rem 1rem",
-                  boxShadow: "0 0.25rem 0.5rem rgba(0,0,0,0.25)",
-                  "&:hover": {
-                    backgroundColor: "#e6764f",
-                  },
-                }}
-              >
-                What's In Your Kitchen?
-              </Button>
-              <Button
-                variant="outlined"
-                onClick={() => navigate("/signup")}
-                sx={{
-                  color: "#ff885b",
-                  borderColor: "#ff885b",
-                  backgroundColor: "#ef6c000a",
-                  textTransform: "capitalize",
-                  letterSpacing: "0.02875rem",
-                  borderRadius: "0.625rem",
-                  minHeight: "2.5625rem",
-                  padding: "0.5rem 1.375rem",
-                  boxShadow: "0 0.25rem 0.25rem #00000040",
-                  "&:hover": {
-                    borderColor: "#ff885b",
-                    backgroundColor: "#fff5ee",
-                  },
-                }}
-              >
-                Sign Up
-              </Button>
-            </Box>
-          </Box>
-        </Box>
+      <Box
+        sx={{
+          display: "flex",
+          gap: "1.5625rem",
+          mt: { xs: "2.5rem", md: "3.625rem" },
+          fontSize: "1.25rem",
+          fontWeight: 500,
+        }}
+      >
+        <Button
+          variant="contained"
+          onClick={() => navigate("/signin")}
+          sx={{
+            minHeight: "2.5625rem",
+            backgroundColor: "#FF885B",
+            color: "#fff",
+            borderRadius: "0.5rem",
+            fontSize: "1rem",
+            letterSpacing: "0.025rem",
+            textTransform: "none",
+            padding: "0.5625rem 1rem",
+            boxShadow: "0 0.25rem 0.5rem rgba(0,0,0,0.25)",
+            "&:hover": {
+              backgroundColor: "#e6764f",
+            },
+          }}
+        >
+          Sign In
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={() => navigate("/signup")}
+          sx={{
+            color: "#ff885b",
+            borderColor: "#ff885b",
+            backgroundColor: "#ef6c000a",
+            textTransform: "capitalize",
+            letterSpacing: "0.02875rem",
+            borderRadius: "0.625rem",
+            minHeight: "2.5625rem",
+            padding: "0.5rem 1.375rem",
+            boxShadow: "0 0.25rem 0.25rem #00000040",
+            "&:hover": {
+              borderColor: "#ff885b",
+              backgroundColor: "#fff5ee",
+            },
+          }}
+        >
+          Sign Up
+        </Button>
+      </Box>
+    </Box>
+  </Box>
+) : (
+  <Box
+    sx={{
+      display: "flex",
+      flexDirection: "column",
+      width: { xs: "100%", md: "50%" },
+      mt: { xs: "2.5rem", md: "5.625rem" },
+    }}
+  >
+    <Box
+      sx={{
+        zIndex: 10,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        mr: { xs: 0, md: "-2.875rem" },
+        fontFamily: "Montserrat, -apple-system, Roboto, Helvetica, sans-serif",
+      }}
+    >
+      <Box>
+        <Typography
+          component="span"
+          sx={{
+            display: "block",
+            fontSize: { xs: "2.5rem", md: "3.75rem" },
+            fontWeight: 500,
+             fontFamily: "Montserrat, sans-serif",
+            color: "#000",
+          }}
+        >
+          Welcome back!!!
+        </Typography>
+        <Typography
+          component="span"
+          sx={{
+            display: "block",
+            fontSize: { xs: "2.5rem", md: "6.875rem" },
+            fontWeight: 600,
+             fontFamily: "Montserrat, sans-serif",
+            color: "#ff885b",
+          }}
+        >
+          {user}
+        </Typography>
+      </Box>
+
+      <Typography
+        sx={{
+          color: "#000",
+          fontSize: "1.5rem",
+          fontWeight: 400,
+          width: "29.125rem",
+          maxWidth: "100%",
+          mt: "0.125rem",
+          ml: "0.6875rem",
+        }}
+      >
+        Ready to cook something amazing today?
+      </Typography>
+
+      <Box
+        sx={{
+          display: "flex",
+          gap: "1.5625rem",
+          
+          mt: { xs: "2.5rem", md: "3.625rem" },
+          fontSize: "1.25rem",
+          fontWeight: 500,
+        }}
+      >
+        <Button
+          variant="contained"
+          onClick={() => navigate("/pantry")}
+          sx={{
+            minHeight: "2.5625rem",
+            backgroundColor: "#FF885B",
+            color: "#fff",
+            borderRadius: "0.5rem",
+            fontSize: "1rem",
+            letterSpacing: "0.025rem",
+            textTransform: "none",
+            padding: "0.5625rem 1rem",
+            boxShadow: "0 0.25rem 0.5rem rgba(0,0,0,0.25)",
+            "&:hover": {
+              backgroundColor: "#e6764f",
+            },
+          }}
+        >
+          What's in your Kitchen
+        </Button>
+      </Box>
+    </Box>
+  </Box>
+)}
+
 
         <Box
           sx={{
@@ -175,7 +297,6 @@ const HeroSection: React.FC = () => {
               },
             }}
           />
-
           <Box
             sx={{
               position: "absolute",

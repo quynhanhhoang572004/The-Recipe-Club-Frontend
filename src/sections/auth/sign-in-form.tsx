@@ -63,10 +63,11 @@ const SignInForm = () => {
           success: "Signed in successfully",
           error: "Invalid account or password",
         });
-        setToken("access_token", token);
         const user = await getMe();
         dispatch(signIn(user.data));
-        navigate("/");
+        setToken("access_token", token);
+         setTimeout(() => navigate("/"), 0);
+        
       } catch (error) {
         toast.error("Login failed");
         console.error(error);
@@ -74,6 +75,7 @@ const SignInForm = () => {
         setLoading(false);
       }
     },
+    
     [dispatch, navigate],
   );
 
@@ -290,11 +292,13 @@ const SignInForm = () => {
             variant="contained"
             style={{ background: "#FF885B", marginBottom: "-0.625rem" }}
             loading={loading}
+          
           >
             <Box display="flex" alignItems="center" gap="0.3125rem">
               <Typography
                 sx={{
                   fontWeight: 600,
+                  color:"#fffff6"
                 }}
               >
                 Sign in
@@ -328,7 +332,7 @@ const SignInForm = () => {
                 height={24}
                 alt="google-logo"
               />
-              <Typography sx={{ fontWeight: 600 }}>
+              <Typography sx={{ fontWeight: 600,  color:"#fffff6" }}>
                 Sign in with Google
               </Typography>
             </Box>
