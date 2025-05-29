@@ -1,37 +1,54 @@
-import { InputAdornment, TextField } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import { InputAdornment, TextField} from "@mui/material";
+
 import { SearchIcon } from "lucide-react";
-import { useCallback, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useRef, useState } from "react";
+
 
 interface SearchBarProps {
   PlaceHolder: string;
   Width: string;
+  onSearch?: (query: string) => void;
 }
 
-const SearchBar = ({ PlaceHolder, Width }: SearchBarProps) => {
+const SearchBar = ({ PlaceHolder, Width, onSearch }: SearchBarProps) => {
+  const [value, setValue] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
-  const onHandleKey = useCallback(
-    (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === "Enter") {
-        if (searchRef.current && searchRef.current.value.trim() !== "") {
-          navigate(`/search?key=${searchRef.current.value}`);
-        }
+
+
+const onHandleKey = useCallback(
+  (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && searchRef.current?.value.trim()) {
+      const query = searchRef.current.value.trim();
+      if (onSearch) {
+        onSearch(query); 
       }
-    },
-    [navigate],
-  );
+    }
+  },
+  [onSearch]
+);
+
+
+const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const newValue = e.target.value;
+  setValue(newValue);
+  if (onSearch) {
+    onSearch(newValue);
+  }
+};
+
+
+
 
   return (
     <TextField
       inputRef={searchRef}
+      value={value}
       onKeyDown={onHandleKey}
+      onChange={handleChange}
       variant="outlined"
       placeholder={PlaceHolder}
       sx={{
         width: Width,
-
         "& .MuiInputBase-root": {
           height: "2.3rem",
           borderRadius: "0.625rem",
@@ -39,7 +56,7 @@ const SearchBar = ({ PlaceHolder, Width }: SearchBarProps) => {
         "& .MuiOutlinedInput-root": {
           fontWeight: 300,
           fontSize: 16,
-          color: grey[900],
+      
           "&:hover .MuiOutlinedInput-notchedOutline": {
             borderColor: "#FF885B",
           },
@@ -52,7 +69,7 @@ const SearchBar = ({ PlaceHolder, Width }: SearchBarProps) => {
           borderColor: "#FF885B",
         },
       }}
-      slotProps={{
+         slotProps={{
         input: {
           startAdornment: (
             <InputAdornment position="start">

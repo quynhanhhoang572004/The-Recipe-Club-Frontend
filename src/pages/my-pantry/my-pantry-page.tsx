@@ -8,7 +8,6 @@ import PantryTag from "@/components/pantry-tag/pantry-tag";
 import { useAppSelector } from "@/hooks/use-app-selector";
 import { useNavigate } from "react-router-dom";
 
-
 import {
   Recipe,
   getRecommendedRecipes,
@@ -43,7 +42,10 @@ const MyPantryPage = () => {
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeDetail | null>(
     null,
   );
+  const [ingredientSearch, setIngredientSearch] = useState("");
+
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
   const recipesPerPage = 20;
@@ -97,8 +99,14 @@ const MyPantryPage = () => {
 
   const indexOfLastRecipe = currentPage * recipesPerPage;
   const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
-  const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
-  const totalPages = Math.ceil(recipes.length / recipesPerPage);
+  const filteredRecipes = recipes.filter((recipe) =>
+    recipe.title.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+  const currentRecipes = filteredRecipes.slice(
+    indexOfFirstRecipe,
+    indexOfLastRecipe,
+  );
+  const totalPages = Math.ceil(filteredRecipes.length / recipesPerPage);
 
   return (
     <Box
@@ -165,11 +173,13 @@ const MyPantryPage = () => {
                 <SearchBar
                   PlaceHolder="add/remove/paste ingredient"
                   Width="20rem"
+                  onSearch={(query) => setIngredientSearch(query.trim())}
                 />
               </Box>
               <IngredientGroup
                 onCountChange={setPantryCount}
                 onPantryUpdate={() => setPantryUpdated((prev) => !prev)}
+                searchTerm={ingredientSearch}
               />
             </SideBar>
           </Box>
@@ -210,7 +220,14 @@ const MyPantryPage = () => {
               Ingredient
             </Typography>
 
-            <SearchBar PlaceHolder="Find" Width="50rem" />
+            <SearchBar
+              PlaceHolder="Find"
+              Width="50rem"
+              onSearch={(query) => {
+                setSearchQuery(query.trim());
+                setCurrentPage(1);
+              }}
+            />
 
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 2 }}>
               {tags.map((tag) => (
@@ -267,7 +284,7 @@ const MyPantryPage = () => {
               <Box>
                 {selectedRecipe && (
                   <RecipeDetailCard
-                  id = {selectedRecipe.id}
+                    id={selectedRecipe.id}
                     name={selectedRecipe.title}
                     image_url={selectedRecipe.image_url}
                     num_of_ingredient={selectedRecipe.matched_ingredients}

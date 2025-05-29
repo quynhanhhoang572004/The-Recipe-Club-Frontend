@@ -7,6 +7,7 @@ import Home from "@/pages/homepage/home";
 import Profile from "@/pages/auth/profile";
 import RatingPage from "./pages/rating-page/rating-page";
 
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/rating" element={<RatingPage />} />
         <Route path="/rating/:recipeId" element={<RatingPage />} />
+       
       </Routes>
     </BrowserRouter>
   );

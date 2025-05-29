@@ -12,13 +12,18 @@ import {
 interface Props {
   onCountChange?: (count: number) => void;
   onPantryUpdate?: () => void;
+    searchTerm?: string; 
 }
 
-const IngredientGroup = ({ onCountChange, onPantryUpdate }: Props) => {
+const IngredientGroup = ({ onCountChange, onPantryUpdate, searchTerm }: Props) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const [loading, setLoading] = useState(true);
+
+  const filteredIngredients = ingredients.filter((i) =>
+  i.name.toLowerCase().includes((searchTerm ?? "").toLowerCase())
+);
 
   const reportCount = useCallback(
     (ids: Set<number>) => {
@@ -97,18 +102,22 @@ const IngredientGroup = ({ onCountChange, onPantryUpdate }: Props) => {
 
   return (
     <Box>
-      {categories.map((category) => {
-        const items = ingredients.filter((i) => i.category_id === category.id);
-        return (
-          <PantryCategoryBlock
-            key={category.id}
-            category={category.name}
-            items={items}
-            selectedIds={selectedIds}
-            onToggle={toggleIngredient}
-          />
-        );
-      })}
+     {categories.map((category) => {
+  const items = filteredIngredients.filter(
+    (i) => i.category_id === category.id
+  );
+  if (items.length === 0) return null; 
+  return (
+    <PantryCategoryBlock
+      key={category.id}
+      category={category.name}
+      items={items}
+      selectedIds={selectedIds}
+      onToggle={toggleIngredient}
+    />
+  );
+})}
+
     </Box>
   );
 };

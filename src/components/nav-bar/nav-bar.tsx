@@ -4,6 +4,8 @@ import { grey } from "@/theme/color";
 
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+
+
 import { signIn, signOut } from "@/stores/user-slice";
 
 import {
@@ -21,6 +23,10 @@ import {
 } from "@mui/material";
 import { CircleUserRound, Settings } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
+
+interface NavBarProps {
+  onSearch?: (query: string) => void; 
+}
 
 const NavBarLink = styled(Link)(({ isActive }: { isActive?: boolean }) => ({
   underline: "hover",
@@ -62,7 +68,7 @@ const AuthButton = styled(Button)<{
   },
 }));
 
-const NavBar = () => {
+const NavBar = ({ onSearch }: NavBarProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { isAuthenticated } = useAppSelector((state) => state.user);
@@ -89,6 +95,7 @@ const NavBar = () => {
     handleClose();
     navigate("/signin");
   };
+  
 
   return (
     <AppBar
@@ -171,10 +178,13 @@ const NavBar = () => {
             gap: 2,
           }}
         >
-          <SearchBar
-            PlaceHolder={"What’s in your fridge? Start typing..."}
-            Width="24rem"
-          />
+  <SearchBar
+  PlaceHolder="What’s in your fridge? Start typing..."
+  Width="24rem"
+  onSearch={onSearch}
+/>
+
+
           {isAuthenticated ? (
             <>
               <Tooltip title="User profile">
