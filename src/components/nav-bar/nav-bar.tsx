@@ -160,9 +160,6 @@ const NavBar = ({ onSearch }: NavBarProps) => {
               <NavBarLink href="/" isActive={pathname === "/"}>
                 Home
               </NavBarLink>
-              <NavBarLink href="/home" isActive={pathname === "/home"}>
-                About
-              </NavBarLink>
               <NavBarLink href="/pantry" isActive={pathname === "/pantry"}>
                 My pantry
               </NavBarLink>
