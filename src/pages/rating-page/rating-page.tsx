@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Typography } from "@mui/material";
 import Navbar from "@/components/nav-bar/nav-bar";
 import RatingForm from "@/components/rating-form/rating-form";
@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 
 const RatingPage: React.FC = () => {
   const { recipeId: urlRecipeId } = useParams<{ recipeId?: string }>();
-
 
   if (!urlRecipeId) {
     return (
@@ -31,7 +30,6 @@ const RatingPage: React.FC = () => {
       </>
     );
   }
-
 
   return (
     <>

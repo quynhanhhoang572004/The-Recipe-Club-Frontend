@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -20,11 +21,9 @@ import {
   getRecipeRatings,
 } from "@/api/review-rating.service";
 import { getRecipeById, RecipeDetail } from "@/api/recipe.service";
-import { getMe } from "@/api/auth.service";
 
 export type RatingFormProps = {
   recipeId: string;
-  
 };
 
 const RatingForm: React.FC<RatingFormProps> = ({ recipeId }) => {
@@ -35,7 +34,6 @@ const RatingForm: React.FC<RatingFormProps> = ({ recipeId }) => {
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [username, setUsername] = useState<string>("");
   const [existingRatings, setExistingRatings] = useState<any[]>([]);
 
   useEffect(() => {
@@ -50,21 +48,6 @@ const RatingForm: React.FC<RatingFormProps> = ({ recipeId }) => {
 
     fetchRecipe();
   }, [recipeId]);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const userData = await getMe();
-        if (userData?.data?.username) {
-          setUsername(userData.data.username);
-        }
-      } catch (error) {
-        console.error("Failed to fetch user info:", error);
-      }
-    };
-
-    fetchUser();
-  }, []);
 
   useEffect(() => {
     const fetchRatings = async () => {
@@ -122,18 +105,17 @@ const RatingForm: React.FC<RatingFormProps> = ({ recipeId }) => {
 
   return (
     <Box sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
-      
-        <img 
-          src={recipeDetail?.image_url} 
-          alt={recipeDetail?.title || "Recipe image"} 
-          style={{
-            width: "100%",
-            maxHeight: "300px",
-            objectFit: "cover",
-            borderRadius: "8px",
-            marginBottom: "1rem"
-          }}
-        />
+      <img
+        src={recipeDetail?.image_url}
+        alt={recipeDetail?.title || "Recipe image"}
+        style={{
+          width: "100%",
+          maxHeight: "300px",
+          objectFit: "cover",
+          borderRadius: "8px",
+          marginBottom: "1rem",
+        }}
+      />
       <Typography variant="h6" fontWeight="bold" gutterBottom>
         {recipeDetail?.title}
       </Typography>
