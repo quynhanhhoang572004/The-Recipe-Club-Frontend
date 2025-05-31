@@ -8,13 +8,23 @@ import {
 } from "@mui/material";
 import { theme } from "@/themes/theme";
 import { Toaster } from "react-hot-toast";
+import { Provider } from "react-redux";
+import { persistor, store } from "@/stores/store";
+import { PersistGate } from "redux-persist/integration/react";
+import { BrowserRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")!).render(
-  <StyledEngineProvider injectFirst={true}>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
-      <Toaster />
-    </ThemeProvider>
-  </StyledEngineProvider>,
+  <BrowserRouter>
+    <StyledEngineProvider injectFirst={true}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Provider store={store}>
+          <PersistGate persistor={persistor}>
+            <App />
+          </PersistGate>
+        </Provider>
+        <Toaster />
+      </ThemeProvider>
+    </StyledEngineProvider>
+  </BrowserRouter>,
 );
