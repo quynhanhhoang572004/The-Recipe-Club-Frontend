@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1",
+  baseURL:
+    import.meta.env.VITE_API_URL || "http://recipeclub.letsonair.vn/api/v1",
   withCredentials: true,
 });
 
@@ -15,7 +16,7 @@ axiosClient.interceptors.request.use(
 
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 export default axiosClient;
